@@ -15,7 +15,7 @@ use_font_lato: false
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://yoursite.com/child
-root: /fe-deploy/
+root: /blog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -68,9 +68,9 @@ pagination_dir: page
 theme: next
 
 # Deployment
-## Docs: https://hexo.io/docs/deployment.html
+## Docs: https://hexo.io/docs/deployment.html,mater 为主分之 ，文章是推送到博客分之的，编辑以及写文章是用主分之的
 deploy:
   type: git
-  repo: http://github.com/csnikey/fe-deploy.git
+  repo: http://github.com/csnikey/blog.git
   branch: master
 
