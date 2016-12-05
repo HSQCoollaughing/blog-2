@@ -2,6 +2,7 @@
 Thumbs.db
 db.json
 *.log
+#nodemodules 不建议提交的
 node_modules/
 public/
 .deploy*/
