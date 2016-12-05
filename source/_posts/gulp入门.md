@@ -14,7 +14,7 @@ title: gulp项目构建入门
 
 ## 快速入手
 
-### 全局安装cnpm
+### 全局安
 
 ``` bash
 $ npm install -g cnpm --registry=http://192.168.0.234:7001
