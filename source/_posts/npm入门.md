@@ -1,5 +1,6 @@
 ---
 title: npm入门
+categories: npm
 ---
 
 在nodejs大环境下，npm作为包管理工具风靡一时，作为前端开发者需要知道npm可以实现哪些操作，核心的机制是如何的。

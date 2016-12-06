@@ -9,6 +9,7 @@ description: "个人技术分享博客"
 author: "ZhangBing"
 language: zh-Hans
 timezone: 
+
 # 不使用字体 推荐设置
 use_font_lato: false
 
@@ -55,9 +56,9 @@ highlight:
   tab_replace:
 
 # Category & Tag
-default_category: uncategorized
-category_map:
-tag_map:
+default_category: daynote
+category_map: [daynote,html,css,js,es6,nodejs,vue]
+tag_map: [daynote,html,css,js,es6,nodejs,vue]
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date

@@ -1,5 +1,8 @@
 ---
 title: nodejs入门
+categories: nodejs
+tags: [nodejs,nodejs入门,nodejs安装]
+
 ---
 
 作为前后端分离趋势的技术支持，nodejs一直扮演着重要的角色，那么在实际的项目中，nodejs究竟可以做哪些，又有什么遍历之处呢？

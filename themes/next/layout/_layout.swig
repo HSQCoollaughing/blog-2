@@ -64,7 +64,6 @@
   {% block script_extra %}{% endblock %}
 
   {% include '_scripts/boostrap.swig' %}
-
   {% include '_scripts/third-party/comments.swig' %}
   {% include '_scripts/third-party/tinysou.swig' %}
   {% include '_scripts/third-party/localsearch.swig' %}
