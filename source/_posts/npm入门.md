@@ -17,13 +17,7 @@ categories: npm
 
 ### 全局安装cnpm
 
-``` bash
-$ npm install -g cnpm --registry=http://192.168.0.234:7001
-```
-如果你已经安装了cnpm模块，那么重新设置请求地址即可，不需要覆盖安装
-``` bash
-$ cnpm set registry http://192.168.0.234:7001
-```
+
 
 ### 基本模块安装
 cnpm的使用与npm完全相同，只是把npm改为cnpm即可，没有使用难度。
