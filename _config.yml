@@ -83,4 +83,11 @@ deploy:
   type: git
   repo: http://github.com/csnikey/blog.git
   branch: master
-
+  
+# search 
+## 添加搜索字段 ，本博客使用Local Search 安装hexo-generator-searchdb
+#search:
+ ## path: search.xml
+  ##field: post
+  ##format: html
+  ##limit: 10000

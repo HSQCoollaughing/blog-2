@@ -14,7 +14,7 @@ menu:
   tags: 标签
   about: 关于
   search: 搜索
-  commonweal: 公益404
+  commonweal: 404
 
 
 sidebar:
@@ -36,7 +36,7 @@ page:
   tags: 标签
 
 footer:
-  powered: "由 %s 强力驱动"
+  powered: "由 %s 提供技术支持"
   theme: 主题
 
 

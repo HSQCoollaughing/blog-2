@@ -3,18 +3,16 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     cssmin = require('gulp-minify-css'),
     imagemin = require('gulp-imagemin');
+     htmlmin = require('gulp-htmlmin');
+     htmlclean = require('gulp-htmlclean');
+
 //JS压缩
 gulp.task('jsuglify', function() {
-    return gulp.src('public/js/src/*.js')
+    return gulp.src('public/js/**/*.js')
         .pipe(uglify())
-        .pipe(gulp.dest('public/js/src/'))
+        .pipe(gulp.dest('public/js/'))
 });
 gulp.task('jsuglify2', function() {
-    return gulp.src('public/js/src/schemes/*.js')
-        .pipe(uglify())
-        .pipe(gulp.dest('public/js/src/schemes/'))
-});
-gulp.task('jsuglify3', function() {
     return gulp.src('public/lib/jquery_layload/*.js')
         .pipe(uglify())
         .pipe(gulp.dest('public/lib/jquery_layload'))
@@ -43,9 +41,21 @@ gulp.task('images', function() {
 gulp.task('img', function() {
     gulp.src(['public/img/*.*'])
         .pipe(imagemin({
-            progressive: false
+            progressive:true
         }))
         .pipe(gulp.dest('public/img/'));
 });
+//html压缩
+    gulp.task('minify-html', function() {
+      return gulp.src('public/**/*.html')
+        .pipe(htmlclean())
+        .pipe(htmlmin({
+             removeComments: true,
+             minifyJS: true,
+             minifyCSS: true,
+             minifyURLs: true,
+        }))
+        .pipe(gulp.dest('public/'))
+    });
 //前端构建优化  全部压缩  暂时不做合并文件的请求
-gulp.task('build', ['jsuglify','jsuglify2','jsuglify3', 'cssmin', 'images',"img",  'fancybox:css']);
+gulp.task('build', ['jsuglify','jsuglify2','minify-html', 'cssmin', 'images',"img",  'fancybox:css']);

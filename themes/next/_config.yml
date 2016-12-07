@@ -28,6 +28,7 @@ copyright: true
 canonical: true
 
 
+ 
 # ---------------------------------------------------------------
 # Menu Settings
 # ---------------------------------------------------------------
@@ -91,7 +92,7 @@ font:
   # Global font settings used on <body> element.
   global:
     # external: true will load this font family from host.
-    external: true
+    external: false
     family: Lato
 
   # Font settings for Headlines (h1, h2, h3, h4, h5, h6)
@@ -181,9 +182,9 @@ sidebar:
   #  - always  expand for all pages automatically
   #  - hide    expand only when click on the sidebar toggle icon.
   #  - remove  Totally remove sidebar including sidebar toggler.
-  display: post
+  #display: post
   #display: always
-  #display: hide
+  display: hide
   #display: remove
 
 
@@ -203,7 +204,7 @@ sidebar:
 scroll_to_more: false
 
 # Automatically excerpt description in homepage as preamble text.
-excerpt_description: true
+excerpt_description: false
 
 # Automatically Excerpt. Not recommand.
 # Please use <!-- more --> in the post to control excerpt accurately.
@@ -277,8 +278,8 @@ duoshuo_shortname: zhangbing
 # Available value:
 #    button | slide
 # Warning: Baidu Share does not support https.
-#baidushare:
-##  type: button
+baidushare:
+  type: slide
 
 # Share
 #jiathis:
@@ -382,7 +383,7 @@ calendar:
   singleEvents: true
   maxResults: 250
 
-# Algolia Search
+# Algolia Search 需要注册一个账号 
 algolia_search:
   enable: false
   hits:
