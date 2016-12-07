@@ -19,7 +19,7 @@
   {% if theme.sidebar.position %}
     {% set container_class = container_class + 'sidebar-position-' + theme.sidebar.position %}
   {% endif %}
-
+ 
   <div class="{{ container_class }} {% block page_class %}{% endblock %} ">
     <div class="headband"></div>
 
@@ -71,6 +71,8 @@
   {% include '_scripts/third-party/lean-analytics.swig' %}
   {% include '_scripts/baidu-push.swig' %}
   {% include '_components/algolia-search/assets.swig' %}
-
+   {% if theme.algolia %}
+    {% include '_scripts/third-party/algolia.swig' %}
+  {% endif %}
 </body>
 </html>

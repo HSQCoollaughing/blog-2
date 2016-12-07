@@ -59,3 +59,12 @@ gulp.task('img', function() {
     });
 //前端构建优化  全部压缩  暂时不做合并文件的请求
 gulp.task('build', ['jsuglify','jsuglify2','minify-html', 'cssmin', 'images',"img",  'fancybox:css']);
+
+
+var browserSync = require("browser-sync");
+gulp.task("sync", function() {
+	browserSync.init({
+        files: "**"
+    });
+
+});

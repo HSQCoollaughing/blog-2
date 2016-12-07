@@ -2,9 +2,9 @@
 title: cnpm--企业npm仓库
 categories: npm
 top: true
+tag: [cnpm入门]
+comments: true
 ---
-
-
 
 我们常常会遇到npm请求慢，对模块介绍不清楚的情况；我们也会遇到自己想发布一个模块，但是只想自己或者部分内部人员使用；诸如此类，因此我们可能会需要一个企业仓库来实现以上的需求，它能够帮我们实现：1 将模块请求设置为内网响应，请求更快；2 在你需要的时候，将模块强制更新，也可以选择性的控制企业仓库只提供模块的对应版本；3 发布一些与业务或者公司内部的技术模块
 
@@ -12,7 +12,7 @@ top: true
 
 ## 图解cnpm
 
-![Alt text](/blog/img/cnpm-desc.png)
+![cnpm描述文档](/blog/img/cnpm-desc.png)
 
 
 
@@ -45,6 +45,12 @@ $ cnpm sync [name]
 ``` bash
 $ cnpm login
 ```
+* 模块初始化
+模块要想发布到npm仓库，必须有package.json的包说明文件，其他不做具体要求，可根据自己的需要灵活开发私属模块。建议通过cnpm init来实现模块包文件初始化。
+``` bash
+$ cd [name]
+$ cnpm init 
+```
 * 发布模块
 ``` bash
 $ cnpm publish [name]
@@ -54,15 +60,10 @@ $ cnpm publish [name]
 $ cnpm unpublish [name]
 ```
 ### 其他
-* 模块初始化
-模块要想发布到npm仓库，必须有package.json的包说明文件，其他不做具体要求，可根据自己的需要灵活开发私属模块。建议通过cnpm init来实现模块包文件初始化。
-``` bash
-$ cd [name]
-$ cnpm init 
-```
-* 查看模块详情
+
+* 查看已知包名模块详情
 ``` bash
 $ cnpm info [name]
 ```
-
-更多详情参考: [cnpm](http://192.168.0.234:7002/)
+* 也可以通过网址：http://192.168.0.234:7002 ，搜索响应的模块，查看web版本的介绍
+* 更多详情参考: [公司内网cnpm仓库](http://192.168.0.234:7002/)

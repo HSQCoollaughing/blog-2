@@ -6,4 +6,7 @@
   {% include 'search/tinysou.swig' %}
 {% elseif config.search.path %}
   {% include 'search/localsearch.swig' %}
+  
+{% elseif theme.algolia %}
+      {% include 'search/algolia.swig' %}
 {% endif %}

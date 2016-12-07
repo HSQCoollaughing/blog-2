@@ -242,23 +242,21 @@
         {{ post.content }}
       {% endif  %}
     </div>
-
-    <div>
-      {% if not is_index %}
+	{% if not is_index %}
+    	<div>
         {% include 'wechat-subscriber.swig' %}
-      {% endif %}
-    </div>
-
-    <div>
-      {% if not is_index %}
+    	</div>
+     {% endif %}
+	{% if not is_index %}
+    	<div>
         {% include 'reward.swig' %}
-      {% endif %}
-    </div>
-
+    	</div>
+ 	{% endif %}
 
     <footer class="post-footer">
       {% if post.tags and post.tags.length and not is_index %}
         <div class="post-tags">
+          <label class="post-tag-desc">本文标签：</label>
           {% for tag in post.tags %}
             <a href="{{ url_for(tag.path) }}" rel="tag"># {{ tag.name }}</a>
           {% endfor %}

@@ -27,7 +27,14 @@ copyright: true
 # Tips: Before you open this tag, remeber set up your URL in hexo _config.yml ( ex. url: http://yourdomain.com )
 canonical: true
 
+# ---------------------------------------------------------------
+# Scheme Settings
+# ---------------------------------------------------------------
 
+# Schemes
+#scheme: Muse
+#scheme: Mist
+scheme: Pisces
  
 # ---------------------------------------------------------------
 # Menu Settings
@@ -37,10 +44,8 @@ canonical: true
 menu:
   home: /
   categories: /categories
-  
-  archives: /archives
-  tags: /tags
   about: /about
+  tags: /tags
   #sitemap: /sitemap.xml
   #commonweal: /404.html
 
@@ -65,14 +70,7 @@ menu_icons:
 
 
 
-# ---------------------------------------------------------------
-# Scheme Settings
-# ---------------------------------------------------------------
 
-# Schemes
-#scheme: Muse
-#scheme: Mist
-scheme: Pisces
 
 
 # ---------------------------------------------------------------
@@ -265,8 +263,8 @@ mathjax:
 # Baidu Analytics ID
 #baidu_analytics:
 
-# Duoshuo ShortName
-duoshuo_shortname: zhangbing
+# Duoshuo ShortName 功能挂了
+#duoshuo_shortname: zhangbing
 
 # Disqus
 #disqus_shortname:
@@ -278,8 +276,8 @@ duoshuo_shortname: zhangbing
 # Available value:
 #    button | slide
 # Warning: Baidu Share does not support https.
-baidushare:
-  type: slide
+#baidushare:
+  #type: slide
 
 # Share
 #jiathis:
@@ -308,7 +306,7 @@ baidushare:
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
 duoshuo_info:
-  ua_enable: true
+  ua_enable: false
   admin_enable: false
   user_id: 0
   #admin_nickname: Author
@@ -344,7 +342,7 @@ leancloud_visitors:
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
   # count values only if the other configs are false
-  enable: true
+  enable: false
   # custom uv span for the whole site
   site_uv: false
   site_uv_header: <i class="fa fa-user"></i>
@@ -385,7 +383,7 @@ calendar:
 
 # Algolia Search 需要注册一个账号 
 algolia_search:
-  enable: false
+  enable: true
   hits:
     per_page: 10
   labels:
