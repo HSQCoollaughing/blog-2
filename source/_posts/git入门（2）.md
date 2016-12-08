@@ -1,35 +1,63 @@
 ---
-title: git版本管理入门（一）
+title: git入门（2）
+date: 2016-12-08 17:54:52
 tags: git
 categories: git
 ---
 
-git版本管理作为开源项目的版本管理法则，以及多分支多版本的扁平分布式支持，被大多数的开发者所喜爱，那么究竟如何才能正确而轻松的学习git的版本管理呢？目前公司内部是搭建的gitlab的平台，那么我们学习gitlab的工作流是必须的哦。
+相信你通过git入门学习已经可以进行简单的代码提交与更新了，但那只是开始，这一篇文章将重点带领你如何去做分支管理。
 
 <!--more-->
 
 ---
 
-## 准备工作
-### 准备一个git源项目
-* [github官网地址](https://github.com) ，也可以选择公司内网的[gitlab](http://192.168.0.116/users/sign_in)新建项目，
-* [新建代码仓库教程](https://guides.github.com/activities/hello-world/)
 
+## 查看分支
 
-### 本地安装git客户端
-* 软件下载地址：[内网地址（win64位）](\\192.168.0.117\share1\ZJFE\前端软件) ；[官网地址-win](https://git-scm.com/download/win)
-* 安装教程：[点击查看](http://jingyan.baidu.com/article/49711c617f3e03fa451b7c10.html)
-* 需要注意的是在进入Configuring the line ending conversions界面，选择换行格式，选择“Checkout as-is, commit Unix-style line endings”（按照检出格式检出，但是提交统一按照unix格式）。其他的都是默认选项点下一步即可。
-* 任意位置，可以在鼠标右键菜单打开git bash,或者用git gui进行相关操作。例如 git --version 可以查看安装好的git版本。
-除此之外，git bash面板还支持npm相关的命令操作，但不支持cmd的部分操作。cmd面板可支持git的相关操作，不同的只是前面没有$标志，不影响运行结果。
+* 下面三行分别代表查看本地分支，远程分支，以及所有分支（其中本地当前分支会有*号标记）
 
 ``` bash
-$ git --version 
+$ git branch
+$ git branch -r
+$ git branch -a
 ```
 
-## 图解git
+## 本地新建分支，或者说切换分支
 
-* git的三个代码仓库
+* 要求远程有这个分支，如果没有会提示路径错误,并且会跳转到这个分支。
+
+``` bash
+$ git checkout branchname
+```
+
+* 如果希望本地新增分支，远程没有这个分支。该命令会以当前分支为模板进行分支拷贝。
+ 
+ ``` bash
+$ git branch branchname
+$ git checkout branchname
+//以上两行等效于下面的
+$ git checkout -b branchname
+```
+
+## 删除分支
+
+* 删除本地分支，要求不再本地分支上，如果删除不掉，尝试追加 -f （force表示强制）
+
+``` bash
+$ git branch -d  branchname
+```
+
+* 删除远程分支，提供两种方式(1 删除分支  2 推送空内容 等于删除)
+
+``` bash
+$ git push origin --delete dev1
+$ git push origin :dev1
+```
+
+
+
+
+* 如果希望本地新增分支，远程没有这个分支。
 
 ![git仓库概念](/blog/img/git-desc.png)
 
@@ -147,6 +175,3 @@ $ git push
 ```
 
 ## 更多
-
- * 廖雪峰git教程参考：[点击跳转](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/)
- 
