@@ -20,7 +20,7 @@ $ git branch -r
 $ git branch -a
 ```
 
-## 本地新建分支（切换分支）
+## 切换分支
 ``` bash
 #新建分支（如果本地已有会报错）
 $ git branch branchname
@@ -43,7 +43,7 @@ $ git checkout -b branchname copybranch
 ``` bash
 #删除本地分支，要求不再本地分支上，
 $ git branch -d  branchname
-#如果删除不掉，尝试追加 -f（--force表示强制）
+#如果删除不掉（比如提示有未被归并的修改），尝试追加 -f（--force表示强制）
 $ git branch -d  branchname -f
 
 #删除远程分支，提供两种方式(1 删除分支  2 推送空内容 等于删除)
@@ -55,6 +55,10 @@ $ git push origin :dev1
 ``` bash
 #本地分支推送到远程(远程没有该分支,远程新建分支)
 $ git push --set-upstream origin branchname
+#默认推送到对应分支
+$ git push
+#默认推送到其他分支
+$ git push origin dev1
 ```
 
 ## 合并分支
@@ -68,22 +72,63 @@ $ git merge origin/branchname
 
 
 ## 分支策略
-* 如何利用分支？
+### 如何利用分支？
 首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
 那在哪干活呢？干活都在dev分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把dev分支合并到master上，在master分支发布1.0版本；
 你和你的小伙伴们每个人都在dev分支上干活，每个人都有自己的分支，时不时地往dev分支上合并就可以了。
 
 ![git-sta分支管理](/blog/img/git-sta.png)
 
-* bug分支
-软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。
+### bug分支
+* 软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。
+1. 首先确定要在哪个分支上修复bug，假定需要在master分支上修复，就从master创建临时分支：
+``` bash
+#切换master分支
+$ git checkout master
+#创建bug分支
+$ git checkout -b issue-1
+```
+2. 修复完成后，切换到master分支，并完成合并，最后删除issue-1分支：
+``` bash
+#切换到主分支
+$ git checkout master
+#合并bug分支
+$ git merge --no-ff -m "merged bug fix 1" issue-1
+#删除bug分支
+$ git branch -d issue-1
+```
 
-* 临时保存(git stash) 
-当你正在开发一个分支，但是这个分支还未完全开发好，不能提交到dev,需要临时保存。之后可以根据提供的7进制码（或者提供的临时版本）来找到代码记录。
+### 临时保存(git stash) 
+* 当你正在开发一个分支，但是这个分支还未完全开发好，不能提交到dev,需要临时保存。那么需要提交到本地仓库，然后stash之后就可以保存此时的工作空间。也可以通过这个命令迅速找到此时的提交状态版本。
 ``` bash
 $ git stash
 Saved working directory and index state WIP on blog: 06e9083 sd
 HEAD is now at 06e9083 sd
+```
+
+### 功能分支
+* 我们经常会遇到需要开发新功能，与bug分支策略基本一致，需要建立单独的分支完成功能开发，然后合并，并且删除该分支
+1. 首先确定要在哪个分支上开发功能，假定需要在dev1分支上修复，就从dev1创建fea-dept分支：
+``` bash
+#切换dev1分支
+$ git checkout dev1
+#创建fea分支
+$ git checkout -b fea-dept
 
 ```
-的都是
+2. 修复完成后，切换到dev1分支，并完成合并，最后删除fea-dept分支：
+``` bash
+#切换到开发分支
+$ git checkout dev1
+#合并fea分支
+$ git merge --no-ff -m "merged bug fix 1" fea-dept
+#删除fea分支
+$ git branch -d fea-dept
+```
+
+### 多人协作
+* 如此多的分支种类，该如何处理,可以参考以下建议，具体情况自己灵活使用。
+1. master分支是主分支，因此要时刻与远程同步；
+2. dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；
+3. bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
+4. feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
