@@ -84,4 +84,5 @@ $ git merge origin/branchname
 $ git stash
 Saved working directory and index state WIP on blog: 06e9083 sd
 HEAD is now at 06e9083 sd
+
 ```
