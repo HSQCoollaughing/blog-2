@@ -79,12 +79,11 @@ $ git merge origin/branchname
 软件开发中，bug就像家常便饭一样。有了bug就需要修复，在Git中，由于分支是如此的强大，所以，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。
 
 * 临时保存(git stash) 
-当你正在开发一个分支，但是这个分支还未完全开发好，不能提交到dev,需要临时保存。之后可以根据提供的7进制码来找到代码记录。
+当你正在开发一个分支，但是这个分支还未完全开发好，不能提交到dev,需要临时保存。之后可以根据提供的7进制码（或者提供的临时版本）来找到代码记录。
 ``` bash
 $ git stash
 Saved working directory and index state WIP on blog: 06e9083 sd
 HEAD is now at 06e9083 sd
 
 ```
-
-临时保存 不想提交
+的都是
