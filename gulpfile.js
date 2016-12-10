@@ -60,11 +60,14 @@ gulp.task('img', function() {
 //前端构建优化  全部压缩  暂时不做合并文件的请求
 gulp.task('build', ['jsuglify','jsuglify2','minify-html', 'cssmin', 'images',"img",  'fancybox:css']);
 
-
-var browserSync = require("browser-sync");
+//使用模块来监听文件改变
+var bs= require("browser-sync").create();
 gulp.task("sync", function() {
-	browserSync.init({
-        files: "**"
+	bs.init({
+        files: "**",
+      
+       server:"public/**/*"
     });
+  });
 
-});
+

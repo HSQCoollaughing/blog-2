@@ -44,8 +44,8 @@ scheme: Pisces
 menu:
   home: /
   categories: /categories
-  about: /about
   tags: /tags
+  about: /about
   #sitemap: /sitemap.xml
   #commonweal: /404.html
 

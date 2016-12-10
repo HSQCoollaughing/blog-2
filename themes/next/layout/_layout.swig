@@ -74,5 +74,8 @@
    {% if theme.algolia %}
     {% include '_scripts/third-party/algolia.swig' %}
   {% endif %}
+  
+
+  
 </body>
 </html>
