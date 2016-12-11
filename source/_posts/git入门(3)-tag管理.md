@@ -63,4 +63,3 @@ $ git show [tag]
 
 
 ## 更多
-* git入门3——tag管理

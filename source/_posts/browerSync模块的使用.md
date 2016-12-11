@@ -122,17 +122,110 @@ $ browser-sync reload --port 4000 --files="*.css"
 ## Browsersync API
 Browsersync API是难以置信的简单和强大。你可以用它来创建简单的开发任务或与其他工具配合使用完成复杂的任务。你要使用它， 只需要 require Browsersync 模块，就像您使用其他模块那样。以下是常用方法的详细说明：
 ### 创建方式
-在2.0.0+版本（推荐），调用 .create() 意味着你得到一个唯一的实例并允许您创建多个服务器或代理。
+* .create(name) ，Type: String,可稍后用于检索的标识符,在2.0.0+版本（推荐）这种方式创建服务 ,意味着你得到一个唯一的实例并允许您创建多个服务器或代理。
 ``` bash
-#require 加载 browser-sync 模块
+// 创建一个未命名的实例
 var bs = require("browser-sync").create();
-# .init 启动服务器
+// 创建一个命名实例
+var bs = require("browser-sync").create('My server');
+// 创建多个
+var bs1 = require("browser-sync").create('Server 1');
+var bs2 = require("browser-sync").create('Server 2');
+```
+### 获取实例
+* .get(name) ，可以通过名称获取实例。如果你有其他构建脚本在单独的文件，这很有用。
+``` bash
+// 在一个文件中创建一个命名实例... 
+var bs = require("browser-sync").create('My Server');
+// 初始化Browsersync服务器
+bs.init({
+    server: true
+});
+// 现在，获取另一个实例。 
+var bs = require("browser-sync").get('My server');
+// 并调用它的任何方法。 
+bs.watch('*.html').on('change', bs.reload);
+```
+### 初始化服务
+* .init( config, cb ) ，启动Browsersync服务。这将启动一个服务器，代理服务器或静态服务器，这取决于你实际需要。
+config
+Type: Object [optional]
+这是你的Browsersync实例的主配置，并且可以包含任何可用的选项。如果你不使用已有的配置参数，Browsersync仍将运行; 但只能在 snippet 模式下
+cb
+Type: Function [optional]
+如果你传递一个回调函数，它会在Browsersync已完成全部安装任务，并准备使用时被调用。或同步执行其他任务：当你需要等待信息（网址，端口等），这非常有用。
+``` bash
+var bs = require("browser-sync").create();
+
+// 开始一个Browsersync静态文件服务器
 bs.init({
     server: "./app"
 });
-#现在请BS，而不是方法
-#主Browsersync模块出口，可以控制最终的结果 
-bs.reload("*.html") ;
 
+// 开始一个Browsersync代理
+bs.init({
+    proxy: "http://www.bbc.co.uk"
+});
 ```
-#require dfbdfbsdvfddfbv
+
+### 重载
+.reload( arg ) ，该 reload 方法会通知所有的浏览器相关文件被改动，要么导致浏览器刷新，要么注入文件，实时更新改动。arg Type: String | Array | Object [optional]一个或多个文件被重新加载。
+``` bash
+// 浏览器重载
+bs.reload();
+// 单个文件
+bs.reload("styles.css");
+// 多个文件
+bs.reload(["styles.css", "ie.css"]);
+// 在2.6.0里 - 通配符来重新加载所有的CSS文件 
+bs.reload("*.css");
+```
+
+### 变化流
+.stream( opts ) 该 stream 方法返回一个变换流，并且可以充当一次或多个文件。opts Type: Object [optional]
+配置流的方法 （注: 至少需要2.6.0版本）
+``` bash
+// 编译SASS且自动注入到浏览器
+gulp.task('sass', function () {
+    return gulp.src('scss/styles.scss')
+        .pipe(sass({includePaths: ['scss']}))
+        .pipe(gulp.dest('css'))
+        .pipe(bs.stream());
+});
+
+// 提供 `once: true` 限制每个流重装一次
+gulp.task('templates', function () {
+    return gulp.src('*.jade')
+        .pipe(jade())
+        .pipe(gulp.dest('app'))
+        .pipe(bs.stream({once: true}));
+});
+
+// 提供过滤器以被重新加载阻止不需要的文件
+gulp.task('less', function () {
+    return gulp.src('*.less')
+        .pipe(less())
+        .pipe(gulp.dest('css'))
+        .pipe(bs.stream({match: "**/*.css"}));
+});
+```
+
+### 消息提醒
+.notify( msg, timeout ) 浏览器消息助手 msg Type: String | HTML 可以是一个简单的消息，如“连接”或HTML
+timeout Type: Number [optional]消息将保存在浏览器里时间设置。1.3.0版本
+``` bash
+var bs = require("browser-sync").create();
+
+// 文本信息
+bs.notify("Compiling, please wait!");
+
+// HTML信息
+bs.notify("HTML <span color='green'>is supported</span> too!");
+
+// 1.3.0版本，指定超时
+bs.notify("This message will only last a second", 1000);
+```
+
+### 其他
+
+* 更多方法参考官方文档：[点击跳转](http://www.browsersync.cn/docs/api/)

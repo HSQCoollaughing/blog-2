@@ -66,7 +66,7 @@ gulp.task("sync", function() {
 	bs.init({
         files: "**",
       
-       server:"public/**/*"
+       proxy:"localhost:4000/blog"
     });
   });
 

@@ -35,7 +35,7 @@ $ git --version
 
 * 图解git工作流
 
-![git工作流](git-flow.png)
+![git工作流](/blog/img/git-flow.png)
 
 * git常见的三种工作流程
 

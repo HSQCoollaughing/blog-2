@@ -69,12 +69,15 @@ gulp.task('task-name',[dep1,dep2],function(){
 * gulp.watch(glob[, opts, cb])
 使用场景：监听文件，并且根据文件改变的不同做出不同响应的子任务或者简单记录文档变动日志
 ``` javascript
+#根据检测执行任务
 gulp.watch((["src/less/style.less", "src/less/**/*.less"]), ["less"])；
-```
-``` javascript
+#根据检测查看更改类型，做日志信息
 gulp.watch('src/less/style.less',function(event){
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
 })
+#根据检测,文件改变时执行任务
+gulp.watch((["src/less/style.less", "src/less/**/*.less"]).on("change",function(){
+})；
 ```
 * gulp的执行机制
 gulp默认是吧所有任务并发执行，并不会等待或者按顺序执行，在执行完成之后会进入 任务回调。如果需要制定执行顺序，给出一个提示，来告知 task 什么时候执行完毕，并且再给出一个提示，来告知一个 task 依赖另一个 task 的完成。
