@@ -39,6 +39,10 @@ $ cnpm install [name]
 ``` bash
 $ cnpm sync [name]
 ```
+### 更新模块
+``` bash
+$ cnpm update [name]
+```
 ### 发布与删除模块
 备注：需要先用户登录,用户账号以及密码可以找运维部门索要配置。
 * 用户登录
