@@ -65,9 +65,10 @@ var bs= require("browser-sync").create();
 gulp.task("sync", function() {
 	bs.init({
         files: "**",
-      
-       proxy:"localhost:4000/blog"
-    });
+      proxy:"localhost:4000/blog"
+   });
+
   });
+  
 
 
