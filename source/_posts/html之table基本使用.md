@@ -1,7 +1,7 @@
 ---
 title: html之table标签的基本使用
 date: 2016-12-12 09:28:01
-categories:  [html,web]
+categories:  [html]  
 tags:  table
 ---
 

@@ -10,7 +10,8 @@ categories:  [web]
 
 ## http瀑布图入门 
 如果说你想了解下http的请求情况或者想优化页面初始化的效率，那么http瀑布图是你不可缺少的一个分析工具。如下图所示：下面分别展示了一个页面打开的所有请求以及一个资源请求的详细情况。从下面的图中你既能看到不同请求的请求顺序，请求时间，也能看到资源是同步加载的，脚本会阻塞加载，另外渲染和js执行属于不同的引擎负责，等等。在后面的文章中，我会分别介绍如何去分析这些图，并根据这些图去优化对应的部分。
-![http瀑布图](/blog/img/web/httpdesc.png)
+
+![http瀑布图](/blog/img/web/httpdesc.png) 
  
 
 ## http协议的类型 
@@ -24,8 +25,10 @@ categories:  [web]
 应用层协议：DHCP ·DNS · FTP · Gopher · HTTP· IMAP4 · IRC · NNTP · XMPP ·POP3 · SIP · SMTP ·SNMP · SSH ·TELNET · RPC · RTCP · RTP ·RTSP· SDP · SOAP · GTP · STUN · NTP· SSDP · BGP · RIP 等
 
 * http的通信流程：
+
 ![资源描述图2](/blog/img/web/cgiarch.gif)
-* http的消息结构： 
+* http的消息结构：  
+
 ![资源描述图2](/blog/img/web/msg-struc.png)  
 * http连接注意事项
 HTTP是无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。
@@ -43,12 +46,11 @@ HTTP是无状态：HTTP协议是无状态协议。无状态是指协议对于事
 **cdn请求**:为什么有的文件用cdn加速之后就没有写协议类型，因为当前协议类型有可能是http or https不确定的，写//会自动识别当前的页面请求类型。
 **data:image/png;base64**：为什么没有协议类型，本身属于符合RFC2397的Data URI scheme，不需要加载文件，知识一部分内容直接用于输出，图片是2进制的，所以一般需要转换为64进制。除了这个之外，还有其他类型：比如：data:text/plain,<文本数据> ，data:text/css,<css代码> ,data:image/x-icon;base64,base64编码的icon图片数据等，详细文档请站内搜索“Data URI scheme”。   
 ## http请求状态码
-HTTP状态码（HTTP Status Code）是用以表示网页服务器HTTP响应状态的3位数字代码。它由 RFC 2616 规范定义的，并得到RFC 2518、RFC 2817、RFC 2295、RFC 2774、RFC 4918等规范扩展。http常见的状态码以及代表含义作为前端要清楚，并且正确的运用。以下只提供了部分常见的，如果大家想了解更多可以参考以下在线文档: 
+>HTTP状态码（HTTP Status Code）是用以表示网页服务器HTTP响应状态的3位数字代码。它由 RFC 2616 规范定义的，并得到RFC 2518、RFC 2817、RFC 2295、RFC 2774、RFC 4918等规范扩展。http常见的状态码以及代表含义作为前端要清楚，并且正确的运用。以下只提供了部分常见的，如果大家想了解更多可以参考以下在线文档:   
 [百度百科](http://baike.baidu.com/link?url=5Qa0aFGQ4ZFOS0Bzj4kXZ_p9xPMw8ZV55XUTbx0UhZxHz35wDHaTA2IEV4gXykzqLe5Iwo-m8_DDF_vQyG0PRQnniO06nQ2lySObfBWcbB891L-AIkoD8dvWM2_JvNm3) / [菜鸟教程](http://www.runoob.com/http/http-status-codes.html)
- 
-![httpstatus](/blog/img/web/httpstatus.png)
-1 1xx 信息正在处理
-2 2xx 请求成功 
+ ![httpstatus](/blog/img/web/httpstatus.png)
+**1 1xx 信息正在处理 **
+**2 2xx 请求成功 **
  
 状态码        | 描述           
  ------------- | -------------   
@@ -59,14 +61,14 @@ HTTP状态码（HTTP Status Code）是用以表示网页服务器HTTP响应状�
 204|请求成功，但是服务器没有响应体    
 205|处理了请求，但没有返回内容，要求请求者重置内容再次请求     
 206|部分内容，该状态码表示客户端进行了范围请求，而服务器成功执行了这部分的GET请求 
-3 3xx 重定向状态码
+**3 3xx 重定向状态码**
 
 状态码        | 描述           
  ------------- |-------------
 301|永久性重定向
 302|临时性重定向     
 304|未被修改，不会返回新内容    
-4 4xx 代表请求错误
+**4 4xx 代表请求错误**
 
 状态码        | 描述           
  ------------- |-------------
@@ -77,7 +79,7 @@ HTTP状态码（HTTP Status Code）是用以表示网页服务器HTTP响应状�
 408|请求超时      
 414|请求uri过长      
 417|请求参数不符合标准      
-5 5xx 服务器错误   
+**5 5xx 服务器错误   ** 
  
 状态码        | 描述            
 ------------- |-------------
@@ -95,7 +97,7 @@ HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。
 HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法。
 
 状态码        | 描述            
- ------------- |-------------
+ ------------- |------------- 
 GET|请求指定的页面信息，并返回实体主体  
 HEAD|类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头     
 POST|向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改    
