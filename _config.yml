@@ -99,3 +99,26 @@ algolia:
   adminApiKey: '714e889966c832a7fba0d8dd477e9680'
   indexName: 'blog_csnikey'
   chunkSize: 100
+  
+ # 优化生成的文件 
+html_minifier:
+  enable: true
+  exclude: 
+
+css_minifier:
+  enable: true
+  exclude: 
+    - '*.min.css'
+
+js_minifier:
+  enable: true
+  mangle: true
+  output:
+  compress:
+  exclude: 
+    - '*.min.js'
+    
+# 本地搜索
+search:
+  path: search.xml
+  field: post

@@ -67,7 +67,7 @@ gulp.task("sync", function() {
         files: "**",
       proxy:"localhost:4000/blog"
    });
-
+  gulp.watch("source/**/*.md").on('change', bs.reload);
   });
   
 

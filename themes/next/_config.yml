@@ -156,7 +156,7 @@ social_icons:
 avatar: /img/headimg.png 
 
 
-# Table Of Contents in the Sidebar
+# Table Of Contents in the Sidebar 侧边栏显示文章目录
 toc:
   enable: true
 
@@ -265,7 +265,7 @@ mathjax:
 #baidu_analytics:
 
 # Duoshuo ShortName 功能挂了
-#duoshuo_shortname: zhangbing
+duoshuo_shortname: zhangbing
 
 # Disqus
 #disqus_shortname:

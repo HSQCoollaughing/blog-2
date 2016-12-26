@@ -66,24 +66,6 @@ categories: css
      box-sizing: border-box; /*W3C标准(IE9+，Safari5.1+,Chrome10.0+,Opera10.6+都符合box-sizing的w3c标准语法)*/
   }
 ```
-## 清除浮动
-1. 浮动元素能确认高宽的情况下，对父元素的高宽进行设定
-2. 设置父元素overflow:hidden或者auto
-3. 设置父元素为浮动，也可以重新获取高度
-4. 设置父元素的伪元素来实现
-5. 清除浮动全局样式
-``` css
-.clearfloat:after {
-    display: block;
-    clear: both;
-    content: "";
-    visibility: hidden;
-    height: 0
-}           
-.clearfloat {
-    zoom: 1
-}
-```
 ## 总结 
 * 在综合分析和深刻理解盒模型之后，我们可以得出这样的结论：
 1. 如果用户主题为ie8以上的现代浏览器，那么可以采用ie 的怪异模式来处理所有的盒模型，在boot等主流框架中也是用的这种。（最新，前端开发人员青睐的）
