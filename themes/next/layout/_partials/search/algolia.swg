@@ -1,4 +1,5 @@
- <div class="algolia-popup popup">
+<div class="site-search">
+  <div class="algolia-popup popup">
     <div class="algolia-search">
       <div class="algolia-search-input-icon">
         <i class="fa fa-search"></i>
@@ -14,3 +15,5 @@
       <i class="fa fa-times-circle"></i>
     </span>
   </div>
+</div>
+<script src="//cdn.bootcss.com/instantsearch.js/1.7.1/instantsearch.min.js"></script>

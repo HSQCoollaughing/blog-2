@@ -93,12 +93,12 @@ deploy:
   ##limit: 10000
   
  # algolia search 
-algolia:
-  applicationID: '6A8R2KU5MW'
-  apiKey: '2730de65925d5476021fc6da10b7b00e'
-  adminApiKey: '714e889966c832a7fba0d8dd477e9680'
-  indexName: 'blog_csnikey'
-  chunkSize: 100
+# algolia:
+ #  applicationID: '6A8R2KU5MW'
+ #  apiKey: '2730de65925d5476021fc6da10b7b00e'
+  # adminApiKey: '714e889966c832a7fba0d8dd477e9680'
+  # indexName: 'blog_csnikey'
+  # chunkSize: 100
   
  # 优化生成的文件 
 html_minifier:
@@ -118,7 +118,10 @@ js_minifier:
   exclude: 
     - '*.min.js'
     
-# 本地搜索
-search:
-  path: search.xml
-  field: post
+
+
+ #admin:
+ # name: csnikey
+ # password: 123789
+ #  secret: hey hexo
+ #  expire: 60*1

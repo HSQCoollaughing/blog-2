@@ -1,4 +1,8 @@
-
+{%
+  set js_algolia = [
+    'src/algolia.js'
+  ]
+%}
 {% for common in js_algolia %}
   {# S: Include Algolia instantsearch.js library #}
   {% set algolia_instant_css = url_for(theme.vendors._internal + '/algolia-instant-search/instantsearch.min.css') %}
@@ -12,7 +16,7 @@
     {% set algolia_instant_js = theme.vendors.algolia_instant_js %}
   {% endif %}
   <script src="{{ algolia_instant_js }}"></script>
-  {# E: Include Algolia instantsearch.js library #}
+
 
   <script type="text/javascript" src="{{ url_for(theme.js) }}/{{ common }}?v={{ theme.version }}"></script>
 {% endfor %}
