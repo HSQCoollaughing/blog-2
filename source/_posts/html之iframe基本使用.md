@@ -1,10 +1,11 @@
----
 title: html之iframe标签的基本使用
-date: 2016-12-12 09:28:01
-categories:  [html]
-tags:  iframe
+categories:
+  - html
+tags:
+  - iframe
+author: zhangbing
+date: 2018-12-12 09:28:00
 ---
-
 如果你的页面是一个后台管理页面，那么你一定对iframe不陌生。从h5定稿开始，在涉及框架引入页面时，统一建议使用iframe来进行相关的资源嵌入。
 
 <!--more-->
@@ -44,4 +45,4 @@ $("#iframe", window.parent.document).height(htmlHeight);
 $("#iframe").contents().find("#body")
   //子页面获取父页面的元素
 $(window.parent.document).find("#iframe")
-```  
+```
