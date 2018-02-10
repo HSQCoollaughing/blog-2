@@ -1,0 +1,798 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="table," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="表格作为页面展现中一部分不可获取，尤其在后台管理界面中，我们对之既爱又恨。那么它有哪些样式需要控制呢,又有哪些你所不知道的。本文通过一个简单的table实例来帮你解析实现一个table表格实例所需要的基础知识。">
+<meta name="keywords" content="table">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html之table标签的基本使用">
+<meta property="og:url" content="/2016/12/12/html之table基本使用/index.html">
+<meta property="og:site_name" content="Robin&#39;s blogs">
+<meta property="og:description" content="表格作为页面展现中一部分不可获取，尤其在后台管理界面中，我们对之既爱又恨。那么它有哪些样式需要控制呢,又有哪些你所不知道的。本文通过一个简单的table实例来帮你解析实现一个table表格实例所需要的基础知识。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/blog/img/tabledemo.png">
+<meta property="og:updated_time" content="2018-02-07T15:20:08.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="html之table标签的基本使用">
+<meta name="twitter:description" content="表格作为页面展现中一部分不可获取，尤其在后台管理界面中，我们对之既爱又恨。那么它有哪些样式需要控制呢,又有哪些你所不知道的。本文通过一个简单的table实例来帮你解析实现一个table表格实例所需要的基础知识。">
+<meta name="twitter:image" content="/blog/img/tabledemo.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2016/12/12/html之table基本使用/"/>
+
+
+
+
+
+
+
+
+  <title> html之table标签的基本使用 | Robin's blogs </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+ 
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Robin's blogs</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">每天进步一点，从小白到大师</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="/2016/12/12/html之table基本使用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Robin Zhang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/headimg.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Robin's blogs">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Robin's blogs" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                html之table标签的基本使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-12T09:28:01+08:00">
+                2016-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/html/" itemprop="url" rel="index">
+                    <span itemprop="name">html</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/12/html之table基本使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/12/html之table基本使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>表格作为页面展现中一部分不可获取，尤其在后台管理界面中，我们对之既爱又恨。那么它有哪些样式需要控制呢,又有哪些你所不知道的。本文通过一个简单的table实例来帮你解析实现一个table表格实例所需要的基础知识。</p>
+<a id="more"></a>
+<hr>
+<h2 id="基本了解"><a href="#基本了解" class="headerlink" title="基本了解"></a>基本了解</h2><ol>
+<li>表格标题用caption标签，标头的用thead，  表格内容用tbody ，一个表格默认只有一个标题一个表格头 一个表格内容，标题标签的高度不算入table 的高度 ，表格的默认样式需要修正初始化</li>
+<li>一般情况下针对数据表格建议使用table标签，做好每个表格所需要的枚举数据项总数（如每页10条），做好分页以及意外数据处理，当然也可以用div模拟表格布局。</li>
+<li>td默认会根据内容扩充的，而且布局不是固定布局，为了统一美化处理，需要对每一个单元格做限制单行高宽，如果必须为多行文本且限制高度，内部再加div高度，td本身写高度以及行高是无法限制的，如果不需要处理的采用自动拓展高度即可</li>
+<li>针对数据项的宽度可以采用百分比或者固定数值布局，需要根据不同数据项的需求采用合适的宽高以及样式，例如身份证号、日期等要给合适的宽度，而标题长字段的要给较大的宽度值等</li>
+<li>设置宽度只需要在数据项的名称设置一次即可，后面的表格内容布局会自动参考上面的比例</li>
+<li>colspan为合并列，rowspan为合并行，在布局明显为表格而且有合并单元格时，建议用table实现，简约大方</li>
+</ol>
+<h2 id="代码实践"><a href="#代码实践" class="headerlink" title="代码实践"></a>代码实践</h2><ul>
+<li>html代码部分<pre><code class="bash">&lt;table class=<span class="string">"tableDemo"</span> &gt;
+  &lt;caption &gt;我是表格的标题&lt;/caption&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;&lt;th class=<span class="string">"no"</span>&gt;编号&lt;/th&gt;
+      &lt;th class=<span class="string">"name"</span>&gt;姓名&lt;/th&gt;
+      &lt;th class=<span class="string">"idno"</span>&gt;身份证号&lt;/th&gt;
+      &lt;th class=<span class="string">"desc"</span>&gt;描述&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;001&lt;/td&gt;&lt;td&gt;李四赵武&lt;/td&gt;&lt;td&gt;131102199010242011&lt;/td&gt;&lt;td&gt;13110219901024201的v的的v的的v的的v的1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;002&lt;/td&gt;&lt;td&gt;张三&lt;/td&gt;&lt;td&gt;131102199010242011&lt;/td&gt;&lt;td&gt;13的1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;002&lt;/td&gt;&lt;td&gt;张三&lt;/td&gt;&lt;td&gt;131102199010242011&lt;/td&gt;&lt;td&gt;13的1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;002&lt;/td&gt;&lt;td&gt;张三&lt;/td&gt;&lt;td&gt;131102199010242011&lt;/td&gt;&lt;td&gt;13的1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;002&lt;/td&gt;&lt;td&gt;张三&lt;/td&gt;&lt;td&gt;131102199010242011&lt;/td&gt;&lt;td&gt;13的1&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+</li>
+<li>css代码部分 <pre><code class="css">*{
+  <span class="attribute">margin</span>: <span class="number">0</span>;
+  <span class="attribute">padding</span>: <span class="number">0</span>;
+} 
+<span class="selector-class">.tableDemo</span> {
+  <span class="attribute">width</span>: <span class="number">800px</span>;
+  <span class="comment">/*实际高度286px，如果不清楚实际高度可以不写*/</span>
+  <span class="comment">/*height:251px;*/</span>
+  <span class="attribute">border</span>: <span class="number">1px</span> solid grey;
+  <span class="comment">/*采用固定数据项的宽度决定布局*/</span>
+  <span class="attribute">table-layout</span>: fixed;
+  <span class="comment">/*控制表格外间距*/</span>
+  <span class="attribute">border-spacing</span>: <span class="number">0</span>;
+  <span class="comment">/* 设置合并边框*/</span>
+  <span class="attribute">border-collapse</span>: collapse;
+}
+<span class="comment">/*表格标题栏的样式*/</span>
+<span class="selector-class">.tableDemo</span> <span class="selector-tag">caption</span> {
+  <span class="attribute">height</span>: <span class="number">40px</span>;
+  <span class="attribute">line-height</span>: <span class="number">40px</span>;
+  <span class="attribute">font-size</span>: <span class="number">30px</span>;
+} 
+<span class="comment">/*每一行的数据项*/</span>
+<span class="selector-class">.tableDemo</span> <span class="selector-tag">tr</span> {
+  <span class="attribute">height</span>: <span class="number">40px</span>;
+  <span class="attribute">line-height</span>: <span class="number">40px</span>;
+}
+<span class="selector-class">.tableDemo</span> <span class="selector-tag">tr</span> <span class="selector-tag">th</span>,
+<span class="selector-class">.tableDemo</span> <span class="selector-tag">tr</span> <span class="selector-tag">td</span> {
+  <span class="attribute">border</span>: <span class="number">1px</span> solid grey;
+}
+<span class="comment">/*table中的表格不能做多行超出隐藏  只能通过内部div的设置超出隐藏，这里直接设置内容为单行超出隐藏*/</span>
+<span class="selector-class">.tableDemo</span> <span class="selector-tag">tr</span> <span class="selector-tag">td</span> {
+  <span class="attribute">overflow</span>: hidden;
+  <span class="attribute">white-space</span>: nowrap;
+  <span class="attribute">text-overflow</span>: ellipsis;
+}
+<span class="selector-class">.tableDemo</span> <span class="selector-tag">th</span> {
+  <span class="attribute">line-height</span>: <span class="number">40px</span>;
+  <span class="attribute">height</span>: <span class="number">40px</span>;
+}
+<span class="comment">/*针对各个数据项给不同的宽度*/</span>
+<span class="selector-class">.tableDemo</span> <span class="selector-class">.no</span> {
+  <span class="attribute">width</span>: <span class="number">100px</span>;
+}
+<span class="selector-class">.tableDemo</span> <span class="selector-class">.name</span> {
+  <span class="attribute">width</span>: <span class="number">150px</span>;
+}
+<span class="selector-class">.tableDemo</span> <span class="selector-class">.idno</span> {
+  <span class="attribute">width</span>: <span class="number">250px</span>;
+}
+</code></pre>
+</li>
+<li>效果图如下<br><img src="/blog/img/tabledemo.png" alt="表格效果图"></li>
+</ul>
+
+      
+    </div>
+	
+    	<div>
+        
+
+    	</div>
+     
+	
+    	<div>
+        
+
+    	</div>
+ 	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          <label class="post-tag-desc">本文标签：</label>
+          
+            <a href="/tags/table/" rel="tag"># table</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/12/js编码规范/" rel="next" title="js编码规范">
+                <i class="fa fa-chevron-left"></i> js编码规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/12/css中超出为省略号的实现/" rel="prev" title="css中超出为省略号的实现">
+                css中超出为省略号的实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/12/html之table基本使用/"
+           data-title="html之table标签的基本使用" data-url="/2016/12/12/html之table基本使用/">
+      </div>
+    
+  </div>
+  
+  <script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangbing"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/headimg.png"
+               alt="Robin Zhang" />
+          <p class="site-author-name" itemprop="name">Robin Zhang</p>
+          <p class="site-description motion-element" itemprop="description">越过高山，遇见更好的自己</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/csnikey" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/csnikey" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本了解"><span class="nav-number">1.</span> <span class="nav-text">基本了解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实践"><span class="nav-number">2.</span> <span class="nav-text">代码实践</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Robin Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 提供技术支持
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangbing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+   
+    
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+
+
+  <script type="text/javascript" src="/js/src/algolia.js?v=5.1.0"></script>
+
+  
+  
+
+  
+</body>
+</html>

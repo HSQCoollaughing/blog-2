@@ -1,0 +1,793 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文就css代码规范进行简单的整理，不完善以及不正确之处欢迎大家批评指正。">
+<meta name="keywords" content="css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css编码规范">
+<meta property="og:url" content="/2016/12/08/css编码规范/index.html">
+<meta property="og:site_name" content="Robin&#39;s blogs">
+<meta property="og:description" content="本文就css代码规范进行简单的整理，不完善以及不正确之处欢迎大家批评指正。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-07T15:20:08.985Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css编码规范">
+<meta name="twitter:description" content="本文就css代码规范进行简单的整理，不完善以及不正确之处欢迎大家批评指正。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2016/12/08/css编码规范/"/>
+
+
+
+
+
+
+
+
+  <title> css编码规范 | Robin's blogs </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+ 
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Robin's blogs</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">每天进步一点，从小白到大师</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="/2016/12/08/css编码规范/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Robin Zhang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/headimg.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Robin's blogs">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Robin's blogs" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                css编码规范
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-08T09:27:42+08:00">
+                2016-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/08/css编码规范/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/08/css编码规范/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文就css代码规范进行简单的整理，不完善以及不正确之处欢迎大家批评指正。</p>
+<a id="more"></a>
+<hr>
+<h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><ul>
+<li>选择器命名<br>选择器命名，class命名时选择语义化的，不建议使用直接样式效果，比如.red,.fontBold，另外整体的样式文件中命名建议使用统一的规则，或者驼峰式，或者中划线分割，命名注意缩写，避免与id重名，不建议通过1 2 3等序号命名。关于命名规则以及常见类名可以本站搜索相关文章</li>
+<li>选择器选择原则<br>基本的选择器中，尽量使用类选择器；复杂选择器中，尽量少使用层次、属性的相关选择器。</li>
+<li>样式重用<br>样式重复可以一定程度的避免，用类样式来提炼公共样式，建议多用样式的预处理，比如less。基本使用类选择器实现重用最简单实用。</li>
+<li>合理的避免id的使用<br>原因有二：一个是id修饰权重比较高，不容易被class修改重定义；第二个，id一般被用来定义特定模块的。如果该模块是可重用的，或者不具有特殊意义的不建议使用。</li>
+<li>筛选出同时具有<br>中间没有任何间隔，与群组选择器，后代选择器区分开</li>
+<li>非主流选择器<br>主要包括：伪类选择器，结构选择器，伪元素，属性选择器，语言选择器等。可以本站搜索选择器攻略查看所有的选择器分类以及使用。基于兼容性考虑，建议大家慎用。</li>
+<li>选择器层级<br>层级关系确定在3层以内，去除不必要的层级关系，简化dom结构或者样式组件结构。</li>
+</ul>
+<h2 id="样式分类"><a href="#样式分类" class="headerlink" title="样式分类"></a>样式分类</h2><ul>
+<li>全局样式<br>顾名思义，没有任何限制条件的样式，可以任何位置使用并达到其显示效果。如果可能有样式代码冲突的，建议写在样式组合中最后。定义全局样式的时候，注意样式污染的问题。一般建议用<code>.c-</code>来区分。</li>
+<li>布局样式<br>一般用于页面布局，我们经常会把页面布局和模块混合起来，或者根本就不区分。这实际是因为我们对样式理解不够深刻。实际。从视图分析，很多模块在宽高以及整体布局上都是基于整体布局的。而一些整体布局又是可以重用的，所以这部分建议单独分出来，提高开发效率。一般建议用<code>.g-</code>来区分。</li>
+<li>模块样式<br>以模块的思维去写样式代码，按照层级关系依次展开样式，保证模块清晰同时使得一些样式名称可复用，比如title,price等。其中模块样式顶级也可以理解为命名空间，模块子样式可以追加模块样式前缀，比如header-nav。模块样式是样式代码中占据比例最多的部分，针对具体样式，希望既能做到针对业务，又能提炼出可复用、耦合度低的优质模块。一般建议用<code>.m-</code>来区分。</li>
+<li>组件样式<br>页面中总有一部分常规组件是我们经常用的，定义好他们对我们开发工作有事半功倍的效果。这些组件常见的有，按钮，单选框，多选框，下拉框，时间选择控件等。一般建议用<code>.u-</code>来区分。</li>
+<li>功能样式（交互样式）<br>有些页面中的元素是有额外的含义的，涉及到这类样式时，有时有特定的交互，或者功能，或者内容，我们针对这部分定义为功能样式，比如删除，查看详情，增加，搜索，这些在涉及具体功能时追加的效果，我们会写在功能样式中。一般建议用<code>.f-</code>来区分。</li>
+<li>皮肤样式<br>任何一个网站或者页面都有其布局思想，在这个整体的布局当中，颜色自然是不可缺少的，针对主色，交互色，响应颜色，配色等，我们都会把这一类归到皮肤样式中。一般建议用<code>.s-</code>来区分。</li>
+</ul>
+<h2 id="样式优化"><a href="#样式优化" class="headerlink" title="样式优化"></a>样式优化</h2><ul>
+<li>合理利用继承和默认</li>
+</ul>
+<ol>
+<li>可继承的样式如果是正确的，不用重写；如果是不对的，纠正；</li>
+<li>任何样式都有默认值。或者是继承来的默认值，针对默认值要清楚，决定是否调整</li>
+</ol>
+<ul>
+<li>抽离公共样式<br>代码中有超过2个类超过3行以上公用代码，建议抽离公共样式到公共区或者提炼公共样式</li>
+<li>复合属性缩写<br>比如font,border,margin,padding,background等</li>
+<li>减少层级关系<br>层级关系越多，代码量越大，同时访问越慢</li>
+<li>使用高效能的选择器<br>多使用class选择器，css的查询顺序为从右向左，所以最后一个选择器基本决定了你第一次匹配得到的整体数量。</li>
+<li>重绘与重排<br>影响标签显示样式的叫重绘；影响标签大小-盒模型，位置关系的称为重排。尽量减少这两种，如果有需要，优先选择用重绘代替重排。</li>
+<li>待补充</li>
+</ul>
+<h2 id="书写规范"><a href="#书写规范" class="headerlink" title="书写规范"></a>书写规范</h2><ol>
+<li>规则完成一组之后换行，</li>
+<li>选择器开始语法之前大括号前面加空格。</li>
+<li>只有单行样式时放一行，两行以上每行样式一行，每一行添加分号，最后一行也加。</li>
+<li>每个样式属性值前添加空格而属性名之后不加空格。</li>
+<li>数值为0的不用加单位，数值小于1的前面的0可以省略。</li>
+<li>没有边框的时候写border:none</li>
+<li>减少使用低性能的选择器，比如标签，*，多层</li>
+<li>除了颜色以及字体外，所有的代码小写，如果有引号使用单引号</li>
+<li>字体名称请映射成对应的英文名</li>
+<li>背景图片请合理使用csssprites，按照模块、业务、页面来划分均可</li>
+<li>css背景图片的文件类型，请按照以下原则来保存:如果背景图片有动画，则保存成gif,如果没有动画，也没有半透明效果，则保存成png-8,如果有半透明效果，则保存成png-24</li>
+<li>清除浮动采用样式，不使用增加空标签的方式</li>
+<li>避免过小的背景图片平铺</li>
+<li>减少使用important</li>
+<li>待补充…</li>
+</ol>
+<h2 id="编写顺序"><a href="#编写顺序" class="headerlink" title="编写顺序"></a>编写顺序</h2><ol>
+<li>显示属性<br>display/list-style/position/float/clear</li>
+<li>盒子模型<br>width/height/margin/padding/border</li>
+<li>背景<br>background</li>
+<li>行高 文本属性其他<br>line-height,color/font/text-decoration/text-align/,<br>text-indent/vertical-align/white-space/content,<br>cursor/z-index/zoom</li>
+<li>css3属性<br>transform/transition/animation/box-shadow/border-radius</li>
+<li>链接的样式请严格按照如下顺序添加<br>a:link -&gt; a:visited -&gt; a:hover -&gt; a:active</li>
+</ol>
+<h2 id="注释规范"><a href="#注释规范" class="headerlink" title="注释规范"></a>注释规范</h2><p>注释长度要求：注释中的每一行长度不超过40个汉字，或者80个英文字符</p>
+<ul>
+<li><p>文件顶部注释</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @description: xxxxx中文说明</span></span><br><span class="line"><span class="comment">* @author: zhifu.wang</span></span><br><span class="line"><span class="comment">* @update: zhifu.wang (2012-10-17 18:32)</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>模块注释，模块注释必须单独写在一行</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* module: module1 by zhifu.wang */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>单行注释，单行注释可以写在单独一行，也可以写在行尾</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* this is a short comment */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多行注释 :多行注释必须写在单独行内</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* this is comment line 1.</span></span><br><span class="line"><span class="comment">* this is comment line 2.</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特殊注释 :用于标注修改、待办等信息</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* <span class="doctag">TODO:</span> xxxx by zhifu.wang 2012-10-18 18:32 */</span></span><br><span class="line"><span class="comment">/* BUGFIX: xxxx by zhifu.wang 2012-10-18 18:32 */</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="浏览器hack"><a href="#浏览器hack" class="headerlink" title="浏览器hack"></a>浏览器hack</h2><ul>
+<li>浏览器的hack ：能少用就少用hack ,浏览器的hack如下，注意按照一定的顺序书写：<br>-webkit-,-moz-,-o-,-ms-,通用的，针对ie不同版本的，归纳如下：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">IE6</span>        _<span class="selector-tag">property</span>: <span class="selector-tag">value</span></span><br><span class="line"><span class="selector-tag">IE7</span>        +<span class="selector-tag">property</span>: <span class="selector-tag">value</span></span><br><span class="line">IE6/7        *property: value</span><br><span class="line">IE6/7/8/9        property: value\9</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+	
+    	<div>
+        
+
+    	</div>
+     
+	
+    	<div>
+        
+
+    	</div>
+ 	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          <label class="post-tag-desc">本文标签：</label>
+          
+            <a href="/tags/css/" rel="tag"># css</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/08/html编码规范/" rel="next" title="html编码规范">
+                <i class="fa fa-chevron-left"></i> html编码规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/08/html之meta标签详解/" rel="prev" title="html之meta标签详解">
+                html之meta标签详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/08/css编码规范/"
+           data-title="css编码规范" data-url="/2016/12/08/css编码规范/">
+      </div>
+    
+  </div>
+  
+  <script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangbing"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/headimg.png"
+               alt="Robin Zhang" />
+          <p class="site-author-name" itemprop="name">Robin Zhang</p>
+          <p class="site-description motion-element" itemprop="description">越过高山，遇见更好的自己</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/csnikey" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/csnikey" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#选择器"><span class="nav-number">1.</span> <span class="nav-text">选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#样式分类"><span class="nav-number">2.</span> <span class="nav-text">样式分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#样式优化"><span class="nav-number">3.</span> <span class="nav-text">样式优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书写规范"><span class="nav-number">4.</span> <span class="nav-text">书写规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写顺序"><span class="nav-number">5.</span> <span class="nav-text">编写顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注释规范"><span class="nav-number">6.</span> <span class="nav-text">注释规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器hack"><span class="nav-number">7.</span> <span class="nav-text">浏览器hack</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Robin Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 提供技术支持
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangbing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+   
+    
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+
+
+  <script type="text/javascript" src="/js/src/algolia.js?v=5.1.0"></script>
+
+  
+  
+
+  
+</body>
+</html>

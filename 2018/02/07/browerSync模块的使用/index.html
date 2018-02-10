@@ -1,0 +1,751 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="你经常会遇到项目代码修改调试然后重新刷新页面甚至清楚浏览器缓存的情况，下面提供一种方案为你提高下工作效率–browserSync.  sd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="browserSync模块的使用（1）">
+<meta property="og:url" content="/2018/02/07/browerSync模块的使用/index.html">
+<meta property="og:site_name" content="Robin&#39;s blogs">
+<meta property="og:description" content="你经常会遇到项目代码修改调试然后重新刷新页面甚至清楚浏览器缓存的情况，下面提供一种方案为你提高下工作效率–browserSync.  sd">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-07T15:20:08.983Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="browserSync模块的使用（1）">
+<meta name="twitter:description" content="你经常会遇到项目代码修改调试然后重新刷新页面甚至清楚浏览器缓存的情况，下面提供一种方案为你提高下工作效率–browserSync.  sd">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2018/02/07/browerSync模块的使用/"/>
+
+
+
+
+
+
+
+
+  <title> browserSync模块的使用（1） | Robin's blogs </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+ 
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Robin's blogs</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">每天进步一点，从小白到大师</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="/2018/02/07/browerSync模块的使用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Robin Zhang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/headimg.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Robin's blogs">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Robin's blogs" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                browserSync模块的使用（1）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-07T23:20:08+08:00">
+                2018-02-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/npm/" itemprop="url" rel="index">
+                    <span itemprop="name">npm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2018/02/07/browerSync模块的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/07/browerSync模块的使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>你经常会遇到项目代码修改调试然后重新刷新页面甚至清楚浏览器缓存的情况，下面提供一种方案为你提高下工作效率–browserSync.  sd</p>
+<a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>它不但能够帮你实现同步代码到浏览器，而且可以实现多终端同时响应操作来进行你的开发工作，那么你在微信端调试你的页面遇到的问题或者代码的情况，谷歌浏览器也是可以看到，更多特性等待你去挖掘。</p>
+<h2 id="基本了解"><a href="#基本了解" class="headerlink" title="基本了解"></a>基本了解</h2><h3 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h3><p>官网中文地址：<a href="http://www.browsersync.cn/" target="_blank" rel="noopener">http://www.browsersync.cn/</a><br>官网中文说明： <a href="http://www.browsersync.cn/docs/" target="_blank" rel="noopener">http://www.browsersync.cn/docs/</a><br>github代码托管地址： <a href="https://github.com/BrowserSync/browser-sync" target="_blank" rel="noopener">https://github.com/BrowserSync/browser-sync</a></p>
+<h3 id="优点介绍"><a href="#优点介绍" class="headerlink" title="优点介绍"></a>优点介绍</h3><ul>
+<li>交互同步</li>
+<li>文件同步</li>
+<li>URL历史</li>
+<li>同步定制</li>
+<li>远程督察</li>
+<li>URL通道</li>
+<li>UI或命令行控制</li>
+<li>浏览器支持</li>
+<li>构建工具兼容</li>
+<li>服务于任何本地站点</li>
+<li>安装并运行在任何地方</li>
+<li>空闲运行并再利用</li>
+</ul>
+<h2 id="安装与实现"><a href="#安装与实现" class="headerlink" title="安装与实现"></a>安装与实现</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#全局安装</span></span><br><span class="line">$ npm install -g browser-sync</span><br><span class="line"><span class="comment">#依赖安装</span></span><br><span class="line">$ npm install  browser-sync --save-dev</span><br></pre></td></tr></table></figure>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>Browsersync的工作原理是在<body>标签之后插入初始请求的<code>&lt;script async&gt;...&lt;/script&gt;)</code>    异步脚本标记， 为了能够正常工作    <code>&lt;body&gt;</code>标签必须存在。另外，您可以为使用 snippetOptions代码段自定义规则</body></p>
+<h3 id="监听静态网站"><a href="#监听静态网站" class="headerlink" title="监听静态网站"></a>监听静态网站</h3><p>你可以对特定的文件进行监听，也可以对特定的文件进行监听，如果想监听整体的网站，那么设置–files “**”,文档模式为glob.补充说明默认所建服务器为本地3000端口并且在3001可以看到监测的同步情况。默认成功显示的是网站根目录index.html文件，如果没有提示can not get错误。如果有提示，conneted to browserSync.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动服务器 监听所有的html文件</span></span><br><span class="line">$ browser-sync start --server --files <span class="string">"*.html"</span></span><br><span class="line"><span class="comment"># 启动服务器 监听所有的文件</span></span><br><span class="line">$ browser-sync start --server --files <span class="string">"**"</span></span><br></pre></td></tr></table></figure>
+<h2 id="基本命令行配置"><a href="#基本命令行配置" class="headerlink" title="基本命令行配置"></a>基本命令行配置</h2><h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><ul>
+<li>下面只列出常用的参数，详细的请看<a href="http://www.browsersync.cn/docs/command-line/" target="_blank" rel="noopener">官网说明</a><br>参数| 说明<br>—-|—-<br>–help | 输出使用信息<br>–files | 监听文件的匹配模式<br>–version | 版本信息<br>–browser  |    选择哪个浏览器应该是自动打开<br>–exclude    |文件模式忽视<br>–server|    运行本地服务器（使用您的CWD作为Web根）<br>–index    |指定哪些文件应该被用作索引页<br>–proxy|    代理现有的服务器<br>–host    |指定主机名使用<br>–port    |指定要使用的端口</li>
+</ul>
+<h3 id="文件实例"><a href="#文件实例" class="headerlink" title="文件实例"></a>文件实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单个文件 </span></span><br><span class="line">$ browser-sync start --files <span class="string">"css/core.css"</span></span><br><span class="line"><span class="comment"># 单模式</span></span><br><span class="line">$ browser-sync start --files <span class="string">"css/*.css"</span></span><br><span class="line"><span class="comment"># 多个文件 </span></span><br><span class="line">$ browser-sync start --files <span class="string">"css/core.css, css/ie.css"</span></span><br><span class="line"><span class="comment"># 多模式 </span></span><br><span class="line">$ browser-sync start --files <span class="string">"css/*.css, *.html"</span></span><br><span class="line"><span class="comment"># 启动服务器 监听所有的文件</span></span><br><span class="line">$ browser-sync start --server --files <span class="string">"**"</span></span><br></pre></td></tr></table></figure>
+<h3 id="服务器实例"><a href="#服务器实例" class="headerlink" title="服务器实例"></a>服务器实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用当前目录为根＃静态服务器</span></span><br><span class="line">$ browser-sync start --server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用“应用程序”目录的根目录＃静态服务器</span></span><br><span class="line">$ browser-sync start --server app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用当前目录与目录列表根＃静态服务器 </span></span><br><span class="line">$ browser-sync start --server --directory</span><br></pre></td></tr></table></figure>
+<h3 id="代理实例"><a href="#代理实例" class="headerlink" title="代理实例"></a>代理实例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用local.dev虚拟主机</span></span><br><span class="line">$ browser-sync start --proxy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用local.dev虚拟主机与港口 </span></span><br><span class="line">$ browser-sync start --proxy local.dev:8001</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用本地主机地址 </span></span><br><span class="line">$ browser-sync start --proxy localhost:8001</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用本地主机地址 子地址</span></span><br><span class="line">$ browser-sync start --proxy localhost:8080/site1</span><br></pre></td></tr></table></figure>
+<h3 id="重载选项"><a href="#重载选项" class="headerlink" title="重载选项"></a>重载选项</h3><p>可以选择重载 –files 重载，–port 端口重载 ，–url 提供完整的url重载<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重载http协议</span></span><br><span class="line">$ browser-sync reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重载带端口的HTTP协议</span></span><br><span class="line">$ browser-sync reload --port 4000 --files=<span class="string">"*.css"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Browsersync-API"><a href="#Browsersync-API" class="headerlink" title="Browsersync API"></a>Browsersync API</h2><p>Browsersync API是难以置信的简单和强大。你可以用它来创建简单的开发任务或与其他工具配合使用完成复杂的任务。你要使用它， 只需要 require Browsersync 模块，就像您使用其他模块那样。以下是常用方法的详细说明：</p>
+<h3 id="创建方式"><a href="#创建方式" class="headerlink" title="创建方式"></a>创建方式</h3><ul>
+<li>.create(name) ，Type: String,可稍后用于检索的标识符,在2.0.0+版本（推荐）这种方式创建服务 ,意味着你得到一个唯一的实例并允许您创建多个服务器或代理。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 创建一个未命名的实例</span><br><span class="line">var bs = require(<span class="string">"browser-sync"</span>).create();</span><br><span class="line">// 创建一个命名实例</span><br><span class="line">var bs = require(<span class="string">"browser-sync"</span>).create(<span class="string">'My server'</span>);</span><br><span class="line">// 创建多个</span><br><span class="line">var bs1 = require(<span class="string">"browser-sync"</span>).create(<span class="string">'Server 1'</span>);</span><br><span class="line">var bs2 = require(<span class="string">"browser-sync"</span>).create(<span class="string">'Server 2'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="获取实例"><a href="#获取实例" class="headerlink" title="获取实例"></a>获取实例</h3><ul>
+<li>.get(name) ，可以通过名称获取实例。如果你有其他构建脚本在单独的文件，这很有用。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 在一个文件中创建一个命名实例... </span><br><span class="line">var bs = require(<span class="string">"browser-sync"</span>).create(<span class="string">'My Server'</span>);</span><br><span class="line">// 初始化Browsersync服务器</span><br><span class="line">bs.init(&#123;</span><br><span class="line">    server: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br><span class="line">// 现在，获取另一个实例。 </span><br><span class="line">var bs = require(<span class="string">"browser-sync"</span>).get(<span class="string">'My server'</span>);</span><br><span class="line">// 并调用它的任何方法。 </span><br><span class="line">bs.watch(<span class="string">'*.html'</span>).on(<span class="string">'change'</span>, bs.reload);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="初始化服务"><a href="#初始化服务" class="headerlink" title="初始化服务"></a>初始化服务</h3><ul>
+<li>.init( config, cb ) ，启动Browsersync服务。这将启动一个服务器，代理服务器或静态服务器，这取决于你实际需要。<br>config<br>Type: Object [optional]<br>这是你的Browsersync实例的主配置，并且可以包含任何可用的选项。如果你不使用已有的配置参数，Browsersync仍将运行; 但只能在 snippet 模式下<br>cb<br>Type: Function [optional]<br>如果你传递一个回调函数，它会在Browsersync已完成全部安装任务，并准备使用时被调用。或同步执行其他任务：当你需要等待信息（网址，端口等），这非常有用。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var bs = require(<span class="string">"browser-sync"</span>).create();</span><br><span class="line"></span><br><span class="line">// 开始一个Browsersync静态文件服务器</span><br><span class="line">bs.init(&#123;</span><br><span class="line">    server: <span class="string">"./app"</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 开始一个Browsersync代理</span><br><span class="line">bs.init(&#123;</span><br><span class="line">    proxy: <span class="string">"http://www.bbc.co.uk"</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h3><p>.reload( arg ) ，该 reload 方法会通知所有的浏览器相关文件被改动，要么导致浏览器刷新，要么注入文件，实时更新改动。arg Type: String | Array | Object [optional]一个或多个文件被重新加载。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 浏览器重载</span><br><span class="line">bs.reload();</span><br><span class="line">// 单个文件</span><br><span class="line">bs.reload(<span class="string">"styles.css"</span>);</span><br><span class="line">// 多个文件</span><br><span class="line">bs.reload([<span class="string">"styles.css"</span>, <span class="string">"ie.css"</span>]);</span><br><span class="line">// 在2.6.0里 - 通配符来重新加载所有的CSS文件 </span><br><span class="line">bs.reload(<span class="string">"*.css"</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="变化流"><a href="#变化流" class="headerlink" title="变化流"></a>变化流</h3><p>.stream( opts ) 该 stream 方法返回一个变换流，并且可以充当一次或多个文件。opts Type: Object [optional]<br>配置流的方法 （注: 至少需要2.6.0版本）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 编译SASS且自动注入到浏览器</span><br><span class="line">gulp.task(<span class="string">'sass'</span>, <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    <span class="built_in">return</span> gulp.src(<span class="string">'scss/styles.scss'</span>)</span><br><span class="line">        .pipe(sass(&#123;includePaths: [<span class="string">'scss'</span>]&#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'css'</span>))</span><br><span class="line">        .pipe(bs.stream());</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 提供 `once: <span class="literal">true</span>` 限制每个流重装一次</span><br><span class="line">gulp.task(<span class="string">'templates'</span>, <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    <span class="built_in">return</span> gulp.src(<span class="string">'*.jade'</span>)</span><br><span class="line">        .pipe(jade())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'app'</span>))</span><br><span class="line">        .pipe(bs.stream(&#123;once: <span class="literal">true</span>&#125;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 提供过滤器以被重新加载阻止不需要的文件</span><br><span class="line">gulp.task(<span class="string">'less'</span>, <span class="function"><span class="title">function</span></span> () &#123;</span><br><span class="line">    <span class="built_in">return</span> gulp.src(<span class="string">'*.less'</span>)</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'css'</span>))</span><br><span class="line">        .pipe(bs.stream(&#123;match: <span class="string">"**/*.css"</span>&#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="消息提醒"><a href="#消息提醒" class="headerlink" title="消息提醒"></a>消息提醒</h3><p>.notify( msg, timeout ) 浏览器消息助手 msg Type: String | HTML 可以是一个简单的消息，如“连接”或HTML<br>timeout Type: Number [optional]消息将保存在浏览器里时间设置。1.3.0版本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var bs = require(<span class="string">"browser-sync"</span>).create();</span><br><span class="line"></span><br><span class="line">// 文本信息</span><br><span class="line">bs.notify(<span class="string">"Compiling, please wait!"</span>);</span><br><span class="line"></span><br><span class="line">// HTML信息</span><br><span class="line">bs.notify(<span class="string">"HTML &lt;span color='green'&gt;is supported&lt;/span&gt; too!"</span>);</span><br><span class="line"></span><br><span class="line">// 1.3.0版本，指定超时</span><br><span class="line">bs.notify(<span class="string">"This message will only last a second"</span>, 1000);</span><br></pre></td></tr></table></figure></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li>更多方法参考官方文档：<a href="http://www.browsersync.cn/docs/api/" target="_blank" rel="noopener">点击跳转</a></li>
+</ul>
+
+      
+    </div>
+	
+    	<div>
+        
+
+    	</div>
+     
+	
+    	<div>
+        
+
+    	</div>
+ 	
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/07/cnpm/" rel="next" title="cnpm--企业npm仓库">
+                <i class="fa fa-chevron-left"></i> cnpm--企业npm仓库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/07/gulp入门/" rel="prev" title="gulp项目构建入门(1)">
+                gulp项目构建入门(1) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/02/07/browerSync模块的使用/"
+           data-title="browserSync模块的使用（1）" data-url="/2018/02/07/browerSync模块的使用/">
+      </div>
+    
+  </div>
+  
+  <script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangbing"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/headimg.png"
+               alt="Robin Zhang" />
+          <p class="site-author-name" itemprop="name">Robin Zhang</p>
+          <p class="site-description motion-element" itemprop="description">越过高山，遇见更好的自己</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/csnikey" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/csnikey" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本了解"><span class="nav-number">2.</span> <span class="nav-text">基本了解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方文档"><span class="nav-number">2.1.</span> <span class="nav-text">官方文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点介绍"><span class="nav-number">2.2.</span> <span class="nav-text">优点介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装与实现"><span class="nav-number">3.</span> <span class="nav-text">安装与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">3.2.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监听静态网站"><span class="nav-number">3.3.</span> <span class="nav-text">监听静态网站</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本命令行配置"><span class="nav-number">4.</span> <span class="nav-text">基本命令行配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数说明"><span class="nav-number">4.1.</span> <span class="nav-text">参数说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件实例"><span class="nav-number">4.2.</span> <span class="nav-text">文件实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器实例"><span class="nav-number">4.3.</span> <span class="nav-text">服务器实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理实例"><span class="nav-number">4.4.</span> <span class="nav-text">代理实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重载选项"><span class="nav-number">4.5.</span> <span class="nav-text">重载选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Browsersync-API"><span class="nav-number">5.</span> <span class="nav-text">Browsersync API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建方式"><span class="nav-number">5.1.</span> <span class="nav-text">创建方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取实例"><span class="nav-number">5.2.</span> <span class="nav-text">获取实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化服务"><span class="nav-number">5.3.</span> <span class="nav-text">初始化服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重载"><span class="nav-number">5.4.</span> <span class="nav-text">重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变化流"><span class="nav-number">5.5.</span> <span class="nav-text">变化流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息提醒"><span class="nav-number">5.6.</span> <span class="nav-text">消息提醒</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">5.7.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Robin Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 提供技术支持
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangbing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+   
+    
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+
+
+  <script type="text/javascript" src="/js/src/algolia.js?v=5.1.0"></script>
+
+  
+  
+
+  
+</body>
+</html>

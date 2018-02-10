@@ -1,0 +1,811 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="git," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="git版本管理作为开源项目的版本管理法则，以及多分支多版本的扁平分布式支持，被大多数的开发者所喜爱，那么究竟如何才能正确而轻松的学习git的版本管理呢？目前公司内部是搭建的gitlab的平台，那么我们学习gitlab的工作流是必须的哦。">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git版本管理入门（一）">
+<meta property="og:url" content="/2018/02/07/git入门/index.html">
+<meta property="og:site_name" content="Robin&#39;s blogs">
+<meta property="og:description" content="git版本管理作为开源项目的版本管理法则，以及多分支多版本的扁平分布式支持，被大多数的开发者所喜爱，那么究竟如何才能正确而轻松的学习git的版本管理呢？目前公司内部是搭建的gitlab的平台，那么我们学习gitlab的工作流是必须的哦。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/blog/img/git-desc.png">
+<meta property="og:image" content="/blog/img/git-flow.png">
+<meta property="og:image" content="/blog/img/git-desc2.png">
+<meta property="og:updated_time" content="2018-02-07T15:20:08.985Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git版本管理入门（一）">
+<meta name="twitter:description" content="git版本管理作为开源项目的版本管理法则，以及多分支多版本的扁平分布式支持，被大多数的开发者所喜爱，那么究竟如何才能正确而轻松的学习git的版本管理呢？目前公司内部是搭建的gitlab的平台，那么我们学习gitlab的工作流是必须的哦。">
+<meta name="twitter:image" content="/blog/img/git-desc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/2018/02/07/git入门/"/>
+
+
+
+
+
+
+
+
+  <title> git版本管理入门（一） | Robin's blogs </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+ 
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Robin's blogs</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">每天进步一点，从小白到大师</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="/2018/02/07/git入门/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Robin Zhang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/img/headimg.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Robin's blogs">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Robin's blogs" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                git版本管理入门（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-07T23:20:08+08:00">
+                2018-02-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2018/02/07/git入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/07/git入门/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>git版本管理作为开源项目的版本管理法则，以及多分支多版本的扁平分布式支持，被大多数的开发者所喜爱，那么究竟如何才能正确而轻松的学习git的版本管理呢？目前公司内部是搭建的gitlab的平台，那么我们学习gitlab的工作流是必须的哦。</p>
+<a id="more"></a>
+<hr>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="准备一个git源项目"><a href="#准备一个git源项目" class="headerlink" title="准备一个git源项目"></a>准备一个git源项目</h3><ul>
+<li><a href="https://github.com" target="_blank" rel="noopener">github官网地址</a> ，也可以选择公司内网的<a href="http://192.168.0.116/users/sign_in" target="_blank" rel="noopener">gitlab</a>新建项目，</li>
+<li><a href="https://guides.github.com/activities/hello-world/" target="_blank" rel="noopener">新建代码仓库教程</a></li>
+</ul>
+<h3 id="本地安装git客户端"><a href="#本地安装git客户端" class="headerlink" title="本地安装git客户端"></a>本地安装git客户端</h3><ul>
+<li>软件下载地址：<a href="\\192.168.0.117\share1\ZJFE\前端软件">内网地址（win64位）</a> ；<a href="https://git-scm.com/download/win" target="_blank" rel="noopener">官网地址-win</a></li>
+<li>安装教程：<a href="http://jingyan.baidu.com/article/49711c617f3e03fa451b7c10.html" target="_blank" rel="noopener">点击查看</a></li>
+<li>需要注意的是在进入Configuring the line ending conversions界面，选择换行格式，选择“Checkout as-is, commit Unix-style line endings”（按照检出格式检出，但是提交统一按照unix格式）。其他的都是默认选项点下一步即可。</li>
+<li>任意位置，可以在鼠标右键菜单打开git bash,或者用git gui进行相关操作。例如 git –version 可以查看安装好的git版本。<br>除此之外，git bash面板还支持npm相关的命令操作，但不支持cmd的部分操作。cmd面板可支持git的相关操作，不同的只是前面没有$标志，不影响运行结果。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git --version</span><br></pre></td></tr></table></figure>
+<h2 id="图解git"><a href="#图解git" class="headerlink" title="图解git"></a>图解git</h2><ul>
+<li>git的三个代码仓库</li>
+</ul>
+<p><img src="/blog/img/git-desc.png" alt="git仓库概念"></p>
+<ul>
+<li>图解git工作流</li>
+</ul>
+<p><img src="/blog/img/git-flow.png" alt="git工作流"></p>
+<ul>
+<li>git常见的三种工作流程</li>
+</ul>
+<ol>
+<li>git </li>
+<li>github flow </li>
+<li>gitlab flow</li>
+</ol>
+<p>*了解更多：<a href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html" target="_blank" rel="noopener">git三种工作流的区别</a></p>
+<hr>
+<h2 id="git基本配置"><a href="#git基本配置" class="headerlink" title="git基本配置"></a>git基本配置</h2><h3 id="查看配置"><a href="#查看配置" class="headerlink" title="查看配置"></a>查看配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --list</span><br></pre></td></tr></table></figure>
+<h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><ul>
+<li>设置用户名，邮箱</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"csnikey"</span></span><br><span class="line">$ git config --global user.email <span class="string">"email address"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置编码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global gui.encoding utf-8</span><br><span class="line">$ git config --global i18n.commitencoding utf-8</span><br><span class="line">$ git config --global i18n.logoutputencoding gbk</span><br></pre></td></tr></table></figure>
+<h2 id="git基本命令"><a href="#git基本命令" class="headerlink" title="git基本命令"></a>git基本命令</h2><ul>
+<li>图解git常用命令行</li>
+</ul>
+<p><img src="/blog/img/git-desc2.png" alt="git仓库概念"></p>
+<p> <strong>名词解释:</strong> Workspace:工作区  ; Index / Stage：暂存区; Repository：仓库区（或本地仓库）; Remote：远程仓库;</p>
+<h3 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h3><ul>
+<li><p>当前目录作为项目目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建一个目录作为git目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git init proname</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检出一个项目，默认将用远程项目的名字作为项目文件夹名称(如果检出目录已经有该文件，并且非空会报错哦),另外特别说明：默认情况下clone只能检出master分支，检出后可以利用git branch -r 查看远程分支，然后在checkout 对应的远程分支即可（检出时就是检出远程的分支）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> url</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检出一个项目，用自定义的名字，会帮你新建文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> url self_proname</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="从远程更新代码"><a href="#从远程更新代码" class="headerlink" title="从远程更新代码"></a>从远程更新代码</h3><ul>
+<li>建议项目开发之前都拉取下远程代码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
+<h3 id="提交代码到远程"><a href="#提交代码到远程" class="headerlink" title="提交代码到远程"></a>提交代码到远程</h3><ul>
+<li>检测本地代码的状态,命令行会给出正确的提交流程</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br></pre></td></tr></table></figure>
+<ul>
+<li>提交代码到暂存区 （.代表 所有文件，也可以指定特定文件）.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果遇到提交失败，提示Another git process seems to be running in this repository…,说明有其他进程操作这个文件，删除锁文件即可。然后就可以愉快的进行下一步了。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rm -f ./.git/index.lock</span><br></pre></td></tr></table></figure>
+<ul>
+<li>提交代码到本地仓库 （message代表提交的注释，必须填写的）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m [message]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>提交之前从远程拉取项目，更新一下，避免提交失败。如果拉取失败，那么检出有问题的文件，进行处理。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果有冲突文件，针对冲突文件进行处理，文件内会有多行冲突描述的，建议使用较好的客户端工具，比如toriseGit</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git diff</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改完成之后，重复上面流程，再次pull，如果不报错了，就可以push了，默认提交到本分支</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push</span><br></pre></td></tr></table></figure>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><h3 id="清空命令面板"><a href="#清空命令面板" class="headerlink" title="清空命令面板"></a>清空命令面板</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ clear</span><br></pre></td></tr></table></figure>
+<h3 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h3><ul>
+<li>廖雪峰git教程参考：<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/" target="_blank" rel="noopener">点击跳转</a></li>
+</ul>
+
+      
+    </div>
+	
+    	<div>
+        
+
+    	</div>
+     
+	
+    	<div>
+        
+
+    	</div>
+ 	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          <label class="post-tag-desc">本文标签：</label>
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/07/gulp入门(2)/" rel="next" title="gulp项目构建入门(2)——基本插件的使用">
+                <i class="fa fa-chevron-left"></i> gulp项目构建入门(2)——基本插件的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/12/html之iframe基本使用/" rel="prev" title="html之iframe标签的基本使用">
+                html之iframe标签的基本使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/02/07/git入门/"
+           data-title="git版本管理入门（一）" data-url="/2018/02/07/git入门/">
+      </div>
+    
+  </div>
+  
+  <script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangbing"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/img/headimg.png"
+               alt="Robin Zhang" />
+          <p class="site-author-name" itemprop="name">Robin Zhang</p>
+          <p class="site-description motion-element" itemprop="description">越过高山，遇见更好的自己</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/csnikey" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/csnikey" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备一个git源项目"><span class="nav-number">1.1.</span> <span class="nav-text">准备一个git源项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地安装git客户端"><span class="nav-number">1.2.</span> <span class="nav-text">本地安装git客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图解git"><span class="nav-number">2.</span> <span class="nav-text">图解git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git基本配置"><span class="nav-number">3.</span> <span class="nav-text">git基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看配置"><span class="nav-number">3.1.</span> <span class="nav-text">查看配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置"><span class="nav-number">3.2.</span> <span class="nav-text">修改配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git基本命令"><span class="nav-number">4.</span> <span class="nav-text">git基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建项目"><span class="nav-number">4.1.</span> <span class="nav-text">新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从远程更新代码"><span class="nav-number">4.2.</span> <span class="nav-text">从远程更新代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交代码到远程"><span class="nav-number">4.3.</span> <span class="nav-text">提交代码到远程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多"><span class="nav-number">5.</span> <span class="nav-text">更多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#清空命令面板"><span class="nav-number">5.1.</span> <span class="nav-text">清空命令面板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关文档"><span class="nav-number">5.2.</span> <span class="nav-text">相关文档</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Robin Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 提供技术支持
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangbing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+   
+    
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+
+
+  <script type="text/javascript" src="/js/src/algolia.js?v=5.1.0"></script>
+
+  
+  
+
+  
+</body>
+</html>
