@@ -1,0 +1,767 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端工程化," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在大前端的趋势下，原来的切图仔或者说前端工程师已经不能承载实际需要，在开发以及调试中，我们需要一系列的方案来让我们的项目变得优化，规范，可配置等。本文就这方面做简单分析，并列出了一系列的解决方案，">
+<meta name="keywords" content="前端工程化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端工程化的探索（一）">
+<meta property="og:url" content="/localhost:4000/前端工程化的探索/index.html">
+<meta property="og:site_name" content="Robin&#39;s blogs">
+<meta property="og:description" content="在大前端的趋势下，原来的切图仔或者说前端工程师已经不能承载实际需要，在开发以及调试中，我们需要一系列的方案来让我们的项目变得优化，规范，可配置等。本文就这方面做简单分析，并列出了一系列的解决方案，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/blog/img/libs.png">
+<meta property="og:image" content="/blog/img/tools.png">
+<meta property="og:image" content="/blog/img/libs.png">
+<meta property="og:image" content="/blog/img/components.png">
+<meta property="og:image" content="/blog/img/templates.png">
+<meta property="og:image" content="/blog/img/split.png">
+<meta property="og:image" content="/blog/img/comp-angels.png">
+<meta property="og:image" content="/blog/img/stru1.png">
+<meta property="og:image" content="/blog/img/stru2.png">
+<meta property="og:image" content="/blog/img/files-x.png">
+<meta property="og:image" content="/blog/img/srms.png">
+<meta property="og:updated_time" content="2018-02-08T01:19:23.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端工程化的探索（一）">
+<meta name="twitter:description" content="在大前端的趋势下，原来的切图仔或者说前端工程师已经不能承载实际需要，在开发以及调试中，我们需要一系列的方案来让我们的项目变得优化，规范，可配置等。本文就这方面做简单分析，并列出了一系列的解决方案，">
+<meta name="twitter:image" content="/blog/img/libs.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '6A8R2KU5MW',
+      apiKey: '2730de65925d5476021fc6da10b7b00e',
+      indexName: 'blog_Robin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/localhost:4000/前端工程化的探索/"/>
+
+
+
+
+
+
+
+
+  <title> 前端工程化的探索（一） | Robin's blogs </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+ 
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Robin's blogs</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">每天进步一点，从小白到大师</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="/localhost:4000/blog/前端工程化的探索/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Robin Zhang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/blog/img/headimg.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Robin's blogs">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Robin's blogs" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端工程化的探索（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-07T23:20:00+08:00">
+                2018-02-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/blog/前端工程化的探索/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="前端工程化的探索/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在大前端的趋势下，原来的切图仔或者说前端工程师已经不能承载实际需要，在开发以及调试中，我们需要一系列的方案来让我们的项目变得优化，规范，可配置等。本文就这方面做简单分析，并列出了一系列的解决方案，</p>
+<a id="more"></a>
+<hr>
+<h2 id="了解我们所处的阶段"><a href="#了解我们所处的阶段" class="headerlink" title="了解我们所处的阶段"></a>了解我们所处的阶段</h2><p>前端从无到有，从简单到复杂，从手动到配置，从融合到后端到主导用户应用，不断的对前端的工程化提出了新的概念和挑战，而在这一系列的工具或者方法中，简单分出以下几个阶段。</p>
+<h3 id="stage1：库、框架的选型"><a href="#stage1：库、框架的选型" class="headerlink" title="stage1：库、框架的选型"></a>stage1：库、框架的选型</h3><p><img src="/blog/img/libs.png" alt="常见的库 框架"><br>前端工程建设的第一项任务就是根据项目特征进行技术选型。<br>基本上现在没有人完全从0开始做网站，最少都会选下jquery，而React/Angularjs等框架横空出世，也让前端对页面交互、路由控制等有了更多的话语权。</p>
+<h3 id="stage2：简单构建"><a href="#stage2：简单构建" class="headerlink" title="stage2：简单构建"></a>stage2：简单构建</h3><p><img src="/blog/img/tools.png" alt="构建工具"><br>完成项目之后，一般我们都需要对项目中引用的文件进行简单的优化，包括校验、压缩、合并等，而目前市场上提供的构建工具有grunt,gulp,fis以及webpack等。<br>而市场上目前能做到这个阶段在业界来说已然超出平均水平，属于“具备较高工程化程度”的团队了，查看中国中小企业的网页源代码，能做到最基本的JS/CSS压缩的Web应用都已跨入标准互联网公司行列，不难理解为什么很多前端团队对于前端工程构建的认知还仅停留在“压缩、校验、合并”这种程度。<br>但是我们必须将自己的前端工作做到行业的前列，所以当下我们在仅仅停留在第一阶段的时候，需要快速进入第二阶段，迈向第三阶段。</p>
+<h3 id="stage3-JS-CSS模块化开发"><a href="#stage3-JS-CSS模块化开发" class="headerlink" title="stage3:JS/CSS模块化开发"></a>stage3:JS/CSS模块化开发</h3><p><img src="/blog/img/libs.png" alt="模块开发框架"><br>分而治之是软件工程中的重要思想，是复杂系统开发和维护的基石，这点放在前端开发中同样适用。在解决了基本开发效率运行效率问题之后，前端团队开始思考维护效率，模块化是目前前端最流行的分治手段。<br>很多人觉得模块化开发的工程意义是复用，我不太认可这种看法，在我看来，模块化开发的最大价值应该是分治，只有根据自己的业务需要不断的整合并且开出新的分之，并且分别维护才可以让业务或者技术更加纯熟。而简单的模块复用是不足以应对复杂，多变的需求的。<br>分治的本质就是针对一对代码，一个文件，我们都应该将其定义为模块。JS模块化方案很多，AMD/CommonJS/UMD/ES6 Module等，对应的框架和工具也有很多；CSS模块化开发基本都是在less、sass、stylus等预处理器的import/mixin特性支持下实现的（本博客系统就是基于stylus实现）。</p>
+<h3 id="stage4：工程化问题的爆发"><a href="#stage4：工程化问题的爆发" class="headerlink" title="stage4：工程化问题的爆发"></a>stage4：工程化问题的爆发</h3><p>首先要认识到，前端是一种技术问题较少、工程问题较多的软件开发领域。很多人觉得前端门槛低，但是真到这个行业发现有若干的坑需要踩，没有写几行代码那样简单。那可能遇到什么问题呢？</p>
+<blockquote>
+<ol>
+<li>大体量：多功能、多页面、多状态、多系统；</li>
+<li>大规模：多人甚至多团队合作开发；</li>
+<li>高性能：CDN部署、缓存控制、文件指纹、缓存复用、请求合并、按需加载、同步/异步加载、移动端首屏CSS内嵌、HTTP 2.0服务端资源推送。</li>
+</ol>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>如果要解决上面的问题，我觉得应该从以下几个方面入手，以后也将重点就以下几个方面以及项目中的具体问题做拓展。</p>
+<h3 id="整体规范"><a href="#整体规范" class="headerlink" title="整体规范"></a>整体规范</h3><ul>
+<li>设计规范<br>设计规范是一个前端工程界面部分规范不可或缺的部分，如果设计以及产品不能按照一定的规范执行，那么最终的产品体验以及工程化产物也是复用度很低，不适用于大多数项目的。所以要求公司对所有的公司产品从原型设计到设计稿设计，有整套的设计规范，去除不必要的自由发挥。</li>
+<li>前端代码规范<br>从源头开始制定代码规范，所有的代码符合这一规范，目前制定了包括html\css\js\less在内的代码规范。针对前端项目中遇到的问题，也将统一制定解决方案。比如web视频解决方案，时间控件解决方案，二维码解决方案等。</li>
+<li>构建规范<br>从构建工具开始，每一个细节告诉开发成员应该如何操作，怎样才是规范的，提供完整详细的教程文档以及辅导体制。减少使用不必要的，不规范的代码压缩、验证操作以及不规范的文档结构。</li>
+</ul>
+<h3 id="组件化开发"><a href="#组件化开发" class="headerlink" title="组件化开发"></a>组件化开发</h3><p>前端作为一种GUI软件，光有JS/CSS的模块化还不够，对于UI组件的分治也有着同样迫切的需求。为了更好的实现代码复用，提高工作效率，我强烈建议在项目团队中应该有一定比例的人负责ui组件的开发。而另一部分人是负责使用以及维护，并不断提出优化建议。组件化开发的图示应该是下图所示：<br><img src="/blog/img/components.png" alt="组件开发模型示意"><br>提到组件开发，不仅仅是前端项目可以用，在很多以后台为主导的项目，组件的思路也可以得到灵活的应用。由此可见，以后我们应该更灵活的开发样式，脚本等。在提供一个大而全的框架的同时，也提供让用户可以根据自己的一个小需求，仅仅引入一个小的组件。<br><img src="/blog/img/templates.png" alt="不同技术框架的组件模板"><br>如果有以上的工程概念，那么为了实现优化，我们需要针对不同的组件指定开发者，并在一个开源项目上让大家的组件都是可见的。并且可以无缝的融合到一起，如果要做到这一点，就必须共同遵循同一套规则。其中版本管理的建议用git，而公司内部的gitlab已经为我们提供了便利条件。不同人员分工的图示如下：<br><img src="/blog/img/split.png" alt="工程化组件人员分工"></p>
+<h3 id="不同维度"><a href="#不同维度" class="headerlink" title="不同维度"></a>不同维度</h3><p>就项目而言，一个组件是远远不够的，在实际的开发当中，我们的使用是分很多种情况的。<br>有的时候需要根据自己的业务，有的时候需要根据自己的组件，而有时候又是仅仅需要某些页面。所以针对不同的情况，我们可以参考以下的图示，同时需要了解到这种情况是允许存在的。<br><img src="/blog/img/comp-angels.png" alt="不同维度的拼接图"><br>如果放到一个项目中，可能就是下图所示的结构。<br><img src="/blog/img/stru1.png" alt="不同维度的拼接图"><br><img src="/blog/img/stru2.png" alt="不同维度的拼接图"><br>针对中小型项目，建议的文档结构，也是我们目前正在逐步普及的目录结构。最常见的页面+less组件维度。<br><img src="/blog/img/files-x.png" alt="中小项目结构"></p>
+<h3 id="静态资源管理"><a href="#静态资源管理" class="headerlink" title="静态资源管理"></a>静态资源管理</h3><p>如果说前端对客户端的优点，目前的界面以及交互式肯定比不上的，但是前端的gui界面没有安装的概念，而安装的概念就是把客户端里需要的ui全部本地存储一份。那如果前端在第一次需要的时候就加载全部文件，显然也是不合理的，所以规范的web应用也不会这么做。一般的做法是针对需求做增量更新，最常见的例子就是12306每次的web升级包，虽然它交互并不好。<br>由“增量”原则引申出的前端优化技巧几乎成为了性能优化的核心，有加载相关的按需加载、延迟加载、预加载、请求合并等策略；有缓存相关的浏览器缓存利用，缓存更新、缓存共享、非覆盖式发布等方案；还有复杂的BigRender、BigPipe、Quickling、PageCache等技术。这些优化方案无不围绕着如何将增量原则做到极致而展开。<br>资源管理的蓝图如下：其中构建工具的部分是通用的，具体选用的时候是针对性的。</p>
+<p><img src="/blog/img/srms.png" alt="中小项目结构"></p>
+<h2 id="工程化实践"><a href="#工程化实践" class="headerlink" title="工程化实践"></a>工程化实践</h2><h3 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h3><p>规范：已制定的相关文档<br>版本管理： git，严格按照版本管理+分之管理进行（支持多分之，bug分之，功能分之等）<br>开源项目仓库：github,gitlab<br>开发目录： src+dist+lib+test(测试)+ node_modules +bower_components<br>前端构建工具： gulp +gulp基本插件（gulp-less等）<br>组件开发工具：less<br>前端页面模板引擎：tmod，artTemplate<br>前端框架选型：jq+boot+jq插件<br>前端ide ：hbuilder+emmet<br>开发环境：chrome+devTool +模拟器<br>包管理器：npm -package.json（npm init ,npm (un)publish,npm install）<br>依赖资源加载：bower<br>同步调试：browserSync 多终端同步调试工具<br>前端依赖模块（浏览器环境）：requirejs (seajs)<br>js模块化： cmd,amd模块规范<br>前端服务器：nodejs </p>
+<h3 id="技术创新部分"><a href="#技术创新部分" class="headerlink" title="技术创新部分"></a>技术创新部分</h3><ul>
+<li>cnpm企业仓库<br>支持内网npm仓库，比npm请求更快。支持企业内部的npm模块发布与使用。</li>
+<li>gulp项目构建<br>支持常见的插件使用，支持gulp的构建实践，实现了开发与生产目录的分离，切实的优化了web项目。</li>
+<li>less组件命名规范化<br>基于模块化之后的深度理解，着重使用less的相关规则，将样式拆分为不同分类，还有不同组件，将css的技术解决方案、兼容方案融合到组件当中。</li>
+<li>npm模块的定义与发布<br>研究了npm js模块的发布机制，可以自行发布模块，供内部员工使用。</li>
+<li>bower静态资源加载机制<br>对项目中需要用到的资源，统一用bower依赖加载，不再用复制粘贴的方式。</li>
+<li>调试开发（browserSync）<br>摒弃手动多端测试，实现多终端自动测试，开发同步修改。</li>
+<li>代码规范<br>针对公司全体前端制定代码规范，提供前端页面初始化模板。</li>
+<li>多环境集成git<br>包括git bash,toriseGit,hb,ws,eclipse多软件集成，让git版本管理使用便携。同时深度调研git版本管理命令行，提供git版本管理入门123系列教程，为公司提供技术支持。</li>
+<li>nrm无痛切换多源<br>可以让你在内网，外网多环境下使用npm命令行</li>
+<li>npm加载请求机制<br>可以根据自己的需求，灵活选择缓存安装还是本地代理安装还是企业内网安装</li>
+<li>静态资源的优化探索（待补充）</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>本文部分内容参考以下文档，表示真心的感谢！</p>
+<ul>
+<li>fouber：[前端工程化基础篇]</li>
+<li></li>
+</ul>
+
+      
+    </div>
+	
+    	<div>
+        
+
+    	</div>
+     
+	
+    	<div>
+        
+
+    	</div>
+ 	
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          <label class="post-tag-desc">本文标签：</label>
+          
+            <a href="/blog/tags/前端工程化/" rel="tag"># 前端工程化</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/markdown教程（2）/" rel="next" title="markdown教程（2）">
+                <i class="fa fa-chevron-left"></i> markdown教程（2）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/browerSync模块的使用/" rel="prev" title="browserSync模块的使用（1）">
+                browserSync模块的使用（1） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="前端工程化的探索/"
+           data-title="前端工程化的探索（一）" data-url="/localhost:4000/前端工程化的探索/">
+      </div>
+    
+  </div>
+  
+  <script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangbing"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/img/headimg.png"
+               alt="Robin Zhang" />
+          <p class="site-author-name" itemprop="name">Robin Zhang</p>
+          <p class="site-description motion-element" itemprop="description">越过高山，遇见更好的自己</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/csnikey" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/csnikey" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#了解我们所处的阶段"><span class="nav-number">1.</span> <span class="nav-text">了解我们所处的阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stage1：库、框架的选型"><span class="nav-number">1.1.</span> <span class="nav-text">stage1：库、框架的选型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stage2：简单构建"><span class="nav-number">1.2.</span> <span class="nav-text">stage2：简单构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stage3-JS-CSS模块化开发"><span class="nav-number">1.3.</span> <span class="nav-text">stage3:JS/CSS模块化开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stage4：工程化问题的爆发"><span class="nav-number">1.4.</span> <span class="nav-text">stage4：工程化问题的爆发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整体规范"><span class="nav-number">2.1.</span> <span class="nav-text">整体规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件化开发"><span class="nav-number">2.2.</span> <span class="nav-text">组件化开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不同维度"><span class="nav-number">2.3.</span> <span class="nav-text">不同维度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态资源管理"><span class="nav-number">2.4.</span> <span class="nav-text">静态资源管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工程化实践"><span class="nav-number">3.</span> <span class="nav-text">工程化实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#技术选型"><span class="nav-number">3.1.</span> <span class="nav-text">技术选型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术创新部分"><span class="nav-number">3.2.</span> <span class="nav-text">技术创新部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Robin Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 提供技术支持
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangbing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+   
+    
+
+  
+  
+  
+  <link rel="stylesheet" href="/blog/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/blog/lib/algolia-instant-search/instantsearch.min.js"></script>
+
+
+  <script type="text/javascript" src="/blog/js/src/algolia.js?v=5.1.0"></script>
+
+  
+  
+
+  
+</body>
+</html>

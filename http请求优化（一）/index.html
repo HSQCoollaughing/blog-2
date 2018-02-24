@@ -1,0 +1,913 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="相信有不止一个人给你推荐过web优化中药减少并简化请求，比如使用图片精灵，合并压缩文件，脚本文件写在dom末尾，那么今天我们从http这个角度去分析，去做一些有意义的探索。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http请求优化（一）">
+<meta property="og:url" content="/localhost:4000/http请求优化（一）/index.html">
+<meta property="og:site_name" content="Robin&#39;s blogs">
+<meta property="og:description" content="相信有不止一个人给你推荐过web优化中药减少并简化请求，比如使用图片精灵，合并压缩文件，脚本文件写在dom末尾，那么今天我们从http这个角度去分析，去做一些有意义的探索。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/blog/img/web/httpdesc.png">
+<meta property="og:image" content="/blog/img/web/netlevel2.jpg">
+<meta property="og:image" content="/blog/img/web/cgiarch.gif">
+<meta property="og:image" content="/blog/img/web/msg-struc.png">
+<meta property="og:image" content="/blog/img/web/httpstatus.png">
+<meta property="og:updated_time" content="2018-02-07T15:20:08.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="http请求优化（一）">
+<meta name="twitter:description" content="相信有不止一个人给你推荐过web优化中药减少并简化请求，比如使用图片精灵，合并压缩文件，脚本文件写在dom末尾，那么今天我们从http这个角度去分析，去做一些有意义的探索。">
+<meta name="twitter:image" content="/blog/img/web/httpdesc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '6A8R2KU5MW',
+      apiKey: '2730de65925d5476021fc6da10b7b00e',
+      indexName: 'blog_Robin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/localhost:4000/http请求优化（一）/"/>
+
+
+
+
+
+
+
+
+  <title> http请求优化（一） | Robin's blogs </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+ 
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Robin's blogs</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">每天进步一点，从小白到大师</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="/localhost:4000/blog/http请求优化（一）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Robin Zhang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/blog/img/headimg.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Robin's blogs">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Robin's blogs" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                http请求优化（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-20T09:15:20+08:00">
+                2016-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/blog/http请求优化（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="http请求优化（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>相信有不止一个人给你推荐过web优化中药减少并简化请求，比如使用图片精灵，合并压缩文件，脚本文件写在dom末尾，那么今天我们从http这个角度去分析，去做一些有意义的探索。</p>
+<a id="more"></a>
+<h2 id="http瀑布图入门"><a href="#http瀑布图入门" class="headerlink" title="http瀑布图入门"></a>http瀑布图入门</h2><p>如果说你想了解下http的请求情况或者想优化页面初始化的效率，那么http瀑布图是你不可缺少的一个分析工具。如下图所示：下面分别展示了一个页面打开的所有请求以及一个资源请求的详细情况。从下面的图中你既能看到不同请求的请求顺序，请求时间，也能看到资源是同步加载的，脚本会阻塞加载，另外渲染和js执行属于不同的引擎负责，等等。在后面的文章中，我会分别介绍如何去分析这些图，并根据这些图去优化对应的部分。</p>
+<p><img src="/blog/img/web/httpdesc.png" alt="http瀑布图"> </p>
+<h2 id="http协议的类型"><a href="#http协议的类型" class="headerlink" title="http协议的类型"></a>http协议的类型</h2><p>科普内容：<br><img src="/blog/img/web/netlevel2.jpg" alt="资源描述图2">  </p>
+<blockquote>
+<p>物理层：以太网 · 调制解调器 · 电力线通信(PLC) · SONET/SDH · G.709 · 光导纤维 · 同轴电缆 · 双绞线等<br>数据链路层：Wi-Fi(IEEE 802.11) · WiMAX(IEEE 802.16) ·ATM · DTM · 令牌环 · 以太网 ·FDDI · 帧中继 · GPRS · EVDO ·HSPA · HDLC · PPP · L2TP ·PPTP · ISDN·STP 等<br>网络层协议：IP (IPv4 · IPv6) · ICMP· ICMPv6·IGMP ·IS-IS · IPsec · ARP · RARP等<br>传输层协议：TCP · UDP · TLS · DCCP · SCTP · RSVP · OSPF 等<br>应用层协议：DHCP ·DNS · FTP · Gopher · HTTP· IMAP4 · IRC · NNTP · XMPP ·POP3 · SIP · SMTP ·SNMP · SSH ·TELNET · RPC · RTCP · RTP ·RTSP· SDP · SOAP · GTP · STUN · NTP· SSDP · BGP · RIP 等</p>
+</blockquote>
+<ul>
+<li>http的通信流程：</li>
+</ul>
+<p><img src="/blog/img/web/cgiarch.gif" alt="资源描述图2"></p>
+<ul>
+<li>http的消息结构：  </li>
+</ul>
+<p><img src="/blog/img/web/msg-struc.png" alt="资源描述图2">  </p>
+<ul>
+<li><p>http连接注意事项<br>HTTP是无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。<br>HTTP是媒体独立的：这意味着，只要客户端和服务器知道如何处理的数据内容，任何类型的数据都可以通过HTTP发送。客户端以及服务器指定使用适合的MIME-type内容类型。<br>HTTP是无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</p>
+</li>
+<li><p>http版本<br>0.9 只接受get，过时；<br>1.0 大多数网站使用；<br>1.1 当前版本。持久连接被默认采用，并能很好地配合代理服务器工作。还支持以管道方式同时发送多个请求，以便降低线路负载，提高传输速度。<br>2.0 符合spdy协议，二进制格式在协议的解析和优化扩展上带来了跟多的优势，对消息头采用Hpack进行压缩传输，能够节省消息头占用的网络流量，异步连接多路复用，Server Push，服务器端能够更快的把资源推送到客户端，保持了与HTTP 1.1语义的向后兼容性</p>
+</li>
+<li>http种类：<br><strong>HTTP</strong>：是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。<br><strong>HTTPS</strong>：是以安全为目标的HTTP通道，简单讲是HTTP的安全版，即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL(ssl用户安全认证)。<br><strong>cdn请求</strong>:为什么有的文件用cdn加速之后就没有写协议类型，因为当前协议类型有可能是http or https不确定的，写//会自动识别当前的页面请求类型。<br><strong>data:image/png;base64</strong>：为什么没有协议类型，本身属于符合RFC2397的Data URI scheme，不需要加载文件，知识一部分内容直接用于输出，图片是2进制的，所以一般需要转换为64进制。除了这个之外，还有其他类型：比如：data:text/plain,&lt;文本数据&gt; ，data:text/css,<css代码> ,data:image/x-icon;base64,base64编码的icon图片数据等，详细文档请站内搜索“Data URI scheme”。   <h2 id="http请求状态码"><a href="#http请求状态码" class="headerlink" title="http请求状态码"></a>http请求状态码</h2><blockquote>
+<p>HTTP状态码（HTTP Status Code）是用以表示网页服务器HTTP响应状态的3位数字代码。它由 RFC 2616 规范定义的，并得到RFC 2518、RFC 2817、RFC 2295、RFC 2774、RFC 4918等规范扩展。http常见的状态码以及代表含义作为前端要清楚，并且正确的运用。以下只提供了部分常见的，如果大家想了解更多可以参考以下在线文档:<br><a href="http://baike.baidu.com/link?url=5Qa0aFGQ4ZFOS0Bzj4kXZ_p9xPMw8ZV55XUTbx0UhZxHz35wDHaTA2IEV4gXykzqLe5Iwo-m8_DDF_vQyG0PRQnniO06nQ2lySObfBWcbB891L-AIkoD8dvWM2_JvNm3" target="_blank" rel="noopener">百度百科</a> / <a href="http://www.runoob.com/http/http-status-codes.html" target="_blank" rel="noopener">菜鸟教程</a><br><img src="/blog/img/web/httpstatus.png" alt="httpstatus"><br><strong>1 1xx 信息正在处理 </strong><br><strong>2 2xx 请求成功 </strong></p>
+</blockquote>
+</css代码></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述           </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>ok 请求被成功处理 </td>
+</tr>
+<tr>
+<td>201</td>
+<td>请求成功，并且服务器创建了新的资源    </td>
+</tr>
+<tr>
+<td>202</td>
+<td>服务器已经接受请求，但还没有处理    </td>
+</tr>
+<tr>
+<td>203</td>
+<td>服务器已经处理了请求，但是信息来自于另一个来源 </td>
+</tr>
+<tr>
+<td>204</td>
+<td>请求成功，但是服务器没有响应体    </td>
+</tr>
+<tr>
+<td>205</td>
+<td>处理了请求，但没有返回内容，要求请求者重置内容再次请求     </td>
+</tr>
+<tr>
+<td>206</td>
+<td>部分内容，该状态码表示客户端进行了范围请求，而服务器成功执行了这部分的GET请求 </td>
+</tr>
+</tbody>
+</table>
+<p><strong>3 3xx 重定向状态码</strong></p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述           </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>301</td>
+<td>永久性重定向</td>
+</tr>
+<tr>
+<td>302</td>
+<td>临时性重定向     </td>
+</tr>
+<tr>
+<td>304</td>
+<td>未被修改，不会返回新内容    </td>
+</tr>
+</tbody>
+</table>
+<p><strong>4 4xx 代表请求错误</strong></p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述           </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>401</td>
+<td>未被授权  </td>
+</tr>
+<tr>
+<td>403</td>
+<td>服务器拒绝请求      </td>
+</tr>
+<tr>
+<td>404</td>
+<td>页面或者文件找不到    </td>
+</tr>
+<tr>
+<td>405</td>
+<td>禁用请求中的指定方法 </td>
+</tr>
+<tr>
+<td>408</td>
+<td>请求超时      </td>
+</tr>
+<tr>
+<td>414</td>
+<td>请求uri过长      </td>
+</tr>
+<tr>
+<td>417</td>
+<td>请求参数不符合标准      </td>
+</tr>
+</tbody>
+</table>
+<p><strong>5 5xx 服务器错误   </strong> </p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述            </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>500</td>
+<td>服务器内部错误  </td>
+</tr>
+<tr>
+<td>501</td>
+<td>服务器不具备响应此需要的功能      </td>
+</tr>
+<tr>
+<td>502</td>
+<td>错误网关     </td>
+</tr>
+<tr>
+<td>503</td>
+<td>服务不可用，比如系统维护或者升级等  </td>
+</tr>
+<tr>
+<td>504</td>
+<td>网关超时      </td>
+</tr>
+<tr>
+<td>505</td>
+<td>http协议版本不支持    </td>
+</tr>
+</tbody>
+</table>
+<h2 id="http请求类型"><a href="#http请求类型" class="headerlink" title="http请求类型"></a>http请求类型</h2><p>共8种请求类型，常见的是get和post请求，所有的这些类型都参与js-restful的设计。<br>根据HTTP标准，HTTP请求可以使用多种请求方法。<br>HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。<br>HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法。</p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述            </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>请求指定的页面信息，并返回实体主体  </td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td>类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头     </td>
+</tr>
+<tr>
+<td>POST</td>
+<td>向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改    </td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>请求服务器删除指定的页面</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器      </td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td>允许客户端查看服务器的性能      </td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td>回显服务器收到的请求，主要用于测试或诊断 </td>
+</tr>
+</tbody>
+</table>
+<h2 id="get与post方式区别"><a href="#get与post方式区别" class="headerlink" title="get与post方式区别"></a>get与post方式区别</h2><p>首先要了解清楚的一点是：我们大多数的请求是get方式的，少数表单或者数据操作是post的，ajax异步多是post.选择上：如果你希望url可见，可被分享抓取，可手动修改参数访问，希望被缓存，参数较短，主要是受限于url长度，那么考虑用get。需要注意的一点是：需要上传文件的要用post.</p>
+<blockquote>
+<p>1.GET被浏览器强制支持（POST是可选的，不过一般都支持）<br>2.GET是幂等的，POST非幂等(幂等每次请求不会对系统造成影响，而post有可能会更新数据)<br>3.GET可以被浏览器缓存，POST不可以（比如访问的历史记录，请求的历史文件，比如样式文件等）<br>4.GET请求是『安全』的，POST不安全(这里的安全还是指的不会更新数据)<br>5.POST相对来说比GET要『安全』一些(操作安全，参数等不可见)<br>6.参数大小（理想和现实）   </p>
+</blockquote>
+
+      
+    </div>
+	
+    	<div>
+        
+
+    	</div>
+     
+	
+    	<div>
+        
+
+    	</div>
+ 	
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/nodejs入门/" rel="next" title="nodejs入门">
+                <i class="fa fa-chevron-left"></i> nodejs入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/markdown教程（1）/" rel="prev" title="markdown教程（1）">
+                markdown教程（1） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="http请求优化（一）/"
+           data-title="http请求优化（一）" data-url="/localhost:4000/http请求优化（一）/">
+      </div>
+    
+  </div>
+  
+  <script type="text/javascript">
+var duoshuoQuery = {short_name:"zhangbing"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/img/headimg.png"
+               alt="Robin Zhang" />
+          <p class="site-author-name" itemprop="name">Robin Zhang</p>
+          <p class="site-description motion-element" itemprop="description">越过高山，遇见更好的自己</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/csnikey" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/csnikey" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#http瀑布图入门"><span class="nav-number">1.</span> <span class="nav-text">http瀑布图入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http协议的类型"><span class="nav-number">2.</span> <span class="nav-text">http协议的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http请求状态码"><span class="nav-number">3.</span> <span class="nav-text">http请求状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http请求类型"><span class="nav-number">4.</span> <span class="nav-text">http请求类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#get与post方式区别"><span class="nav-number">5.</span> <span class="nav-text">get与post方式区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Robin Zhang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 提供技术支持
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.4.1/velocity.ui.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"zhangbing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+   
+    
+
+  
+  
+  
+  <link rel="stylesheet" href="/blog/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/blog/lib/algolia-instant-search/instantsearch.min.js"></script>
+
+
+  <script type="text/javascript" src="/blog/js/src/algolia.js?v=5.1.0"></script>
+
+  
+  
+
+  
+</body>
+</html>
